@@ -12,7 +12,7 @@ Just as with the first project, you will be asked to conduct a 10 minute present
 
 You may choose a project of any theme, but we encourage you to think broadly. The universe is wide and expansive. Don't limit yourself to what you know.
 
-You will have roughly two weeks to complete this project. You will present your final work on Saturday (March 03, 2018). You will have ample time in class to work with your group (but expect to put in some long nights in the days ahead).
+You will have roughly two weeks to complete this project. You will present your final work on Wednesday (March 21, 2018). You will have ample time in class to work with your group (but expect to put in some long nights in the days ahead).
 
 Specific Requirements:
 
