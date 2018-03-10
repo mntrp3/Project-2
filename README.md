@@ -43,12 +43,18 @@ Finding Inspiration
 "Sketching" your ideal visuals
 Creating a 1-Page Proposal
 
-End-of-Class Saturday: You will need to create a 1 page proposal. The proposal should include:
+End-of-Class Saturday: You will need to create a 1 page proposal. The proposal should include:
+
 A brief articulation of your chosen topic and rationale
+
 A link to your dataset(s) and a screenshot of the metadata if it exists.
+
 3-4 screenshots of relevant "inspiring" visualizations that frame your creative fodder
-A sketch of the final design 	
+
+A sketch of the final design
+
 A link to the primary GitHub repository you'll be housing your work in
+
 
 March 12, 14, 17, 19; Project Work
 March 21: Presentations!
