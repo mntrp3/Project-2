@@ -22,7 +22,8 @@ def init():
 	global app
 	getLocs()
 	
-	initScheduler()
+	#initScheduler()
+	checkWeather()
 	app.run(debug=False)
 
 def getLocs():
@@ -70,21 +71,28 @@ def getLocs():
 	with open('config.json', 'r') as configFileIn:
 		 configData = json.load(configFileIn)
 	
+	print(configData)
+	
 	listOfPrimeGeoLocs = configData["primaryGeoLocations"]
 	
-	if(not ("geoWeatherLocMap" in configData)):
-		allGeoLocsWeatherLocs = getAllGeoWeatherLocMappings()
-		configData["geoWeatherLocMap"]=allGeoLocsWeatherLocs
-		configChanged = True
-	else:
-		allGeoLocsWeatherLocs = configData['geoWeatherLocMap']
+	#if(not ("geoWeatherLocMap" in configData)):
+	allGeoLocsWeatherLocs = getAllGeoWeatherLocMappings()
+	print("greater geo weather loc mappings:")
+	print(allGeoLocsWeatherLocs)
+	#	configData["geoWeatherLocMap"]=allGeoLocsWeatherLocs
+	#	configChanged = True
+	#else:
+	#	allGeoLocsWeatherLocs = configData['geoWeatherLocMap']
 	
-	if(not ("weatherLocs" in configData)):
-		allWeatherLocs = numpy.unique(allGeoLocsWeatherLocs.values())
-		configData["weatherLocs"]=allWeatherLocs
-		configChanged = True
-	else:
-		allWeatherLocs = configData["weatherLocs"]
+	#if(not ("weatherLocs" in configData)):
+	##allWeatherLocs = numpy.unique(allGeoLocsWeatherLocs.values(), axis=0)
+	allWeatherLocs = allGeoLocsWeatherLocs.values()
+	print("greater office grid mappings:")
+	print(allWeatherLocs)
+		#configData["weatherLocs"]=allWeatherLocs
+		#configChanged = True
+	#else:
+		#allWeatherLocs = configData["weatherLocs"]
 	#write to config file if any data changed
 	if(configChanged):
 		try:
@@ -94,6 +102,8 @@ def getLocs():
 			print("error modifying config file, now continuing")
 			
 	print("location initialization and update complete.")
+	
+	#sys.exit(0)
 	
 	
 #check api.weather.gov for the office and region for all the locations we gonna check.
@@ -125,13 +135,17 @@ def getAllGeoWeatherLocMappings():
 		for lon in numpy.arange(lonMinHigh,lonMaxHigh, stepHigh):
 			for lat in numpy.arange(latMinHigh,latMaxHigh, stepHigh):
 				locSet.append((lon,lat))
+				
 		
 		for lon in numpy.arange(lonMinLow,lonMaxLow, stepLow):
 			for lat in numpy.arange(latMinLow,latMaxLow, stepLow):
 				locSet.append((lon,lat))
-				
-	locSet = numpy.unique(locSet)
+		
+		
+	#locSet = numpy.unique(locSet, axis=0)
 	
+	print("locset before apiCalls")
+	print(locSet)
 	
 	#the part where we call the weather api for its locations
 	#'https://api.weather.gov/points/lat,lon
@@ -163,9 +177,13 @@ def initScheduler():
 def checkWeather():
 	global listOfPrimeGeoLocs, allGeoLocsWeatherLocs, allWeatherLocs, weatherEndpoint
     #print time.strftime("%A, %d. %B %Y %I:%M:%S %p")
+	visitedSet = {}
 	hackTime = datetime.datetime.now()
 	strTime = hackTime.strftime("%y_%m_%d_%H")
 	for item in allWeatherLocs:
+		if(str(item) in visitedSet):
+			continue
+		visitedSet[str(item)]=1
 		office = item[0]
 		gridX = item[1]
 		gridY = item[2]
