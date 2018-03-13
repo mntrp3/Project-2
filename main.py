@@ -1,4 +1,3 @@
-#scrap ex
 import time
 import atexit
 import os
@@ -6,6 +5,7 @@ import csv
 import requests
 import json
 import numpy
+import datetime
 from flask import Flask
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
@@ -16,16 +16,6 @@ allGeoLocsWeatherLocs = {}
 allWeatherLocs = []
 weatherEndpoint = "https://api.weather.gov/"
 
-"""
-# Writing JSON data
-with open('data.json', 'w') as f:
-     json.dump(data, f)
-
-# Reading data back
-with open('data.json', 'r') as f:
-     data = json.load(f)
-
-"""
 
 #do initialization tasks: setting and checking the locations (if necessary), prep the hourly web reqs, any additional web service needed.
 def init():
@@ -35,7 +25,7 @@ def init():
 	initScheduler()
 	
 	
-    app.run(debug=True)
+    app.run(debug=False)
 
 def getLocs():
 	
@@ -171,8 +161,70 @@ def initScheduler():
 	
 def checkWeather():
     #print time.strftime("%A, %d. %B %Y %I:%M:%S %p")
-
-
+	hackTime = datetime.datetime.now()
+	strTime = hackTime.strftime("%y_%m_%d_%H")
+	for item in allWeatherLocs:
+		office = item[0]
+		gridX = item[1]
+		gridY = item[2]
+		dirPath = "/data/"+office+"/"+str(gridX)+"_"+str(gridY)
+		if!(os.path.isdir(dirPath)):
+			try:
+				os.makedirs(dirPath)
+			except Exception, e:
+				print("Error: could not create required directory.")
+				print(e)
+				sys.exit(1)
+			"""
+			       "forecast": "https://api.weather.gov/gridpoints/IND/27,26/forecast",
+        "forecastHourly": "https://api.weather.gov/gridpoints/IND/27,26/forecast/hourly",
+        "forecastGridData": "https://api.weather.gov/gridpoints/IND/27,26",
+        "observationStations": "https://api.weather.gov/gridpoints/IND/27,26/stations",
+			"""
+		writeBlob = {}
+		#forecastGridData
+		gridDataEndpoint = weatherEndpoint+"gridpoints/"+office+"/"+str(gridX)+","+str(gridY)
+		#forecastHourly
+		hourlyEndpoint = gridDataEndpoint +"/hourly"
+		#forecast
+		forecastEnpoint=gridDataEndpoint +"/forecast"
+		#endpoint1:
+			
+			
+		try:
+			#the endpoints
+			writeBlob["gridData"] = requests.get(gridDataEndpoint).json()
+		except Exception, e:
+			print("Warning: "+str(item)+" failed on grid data weather request.")
+			print(e)
+			time.sleep(5)
+			continue
+			
+		try:
+			#the endpoints
+			writeBlob["hourlyData"] = requests.get(hourlyEndpoint).json()
+		except Exception, e:
+			print("Warning: "+str(item)+" failed on hourly forecast weather request.")
+			print(e)
+			time.sleep(5)
+			continue
+			
+		try:
+			#the endpoints
+			writeBlob["forecastData"] = requests.get(forecastData).json()
+		except Exception, e:
+			print("Warning: "+str(item)+" failed on forecast weather request.")
+			print(e)
+			time.sleep(5)
+			continue
+		
+		#write the data (later to be replaced with db access)
+		try:
+			with open(os.path.join(dirPath,strTime+'.json'), 'w') as curFileOut:
+				json.dump(writeBlob, curFileOut)
+		except:
+			print("error writing data file "+ str(item)+", now exiting")
+			continue
 
 if __name__ == "__main__":
 	main()
