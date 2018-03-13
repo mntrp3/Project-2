@@ -1,60 +1,62 @@
-# Project-2
+# [Start Bootstrap - Simple Sidebar](https://startbootstrap.com/template-overviews/simple-sidebar/)
 
-Our task: Tell a story with data.
+[Simple Sidebar](http://startbootstrap.com/template-overviews/simple-sidebar/) is an off canvas sidebar navigation template for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/).
 
-Project Description:
+## Preview
 
-For this second project, your task will be to "tell a story" through data visualizations.
+[![Simple Sidebar Preview](https://startbootstrap.com/assets/img/templates/simple-sidebar.jpg)](https://blackrockdigital.github.io/startbootstrap-simple-sidebar/)
 
-Unlike the first project, where you focused on using the "Analytics Paradigm" to explore relationships in "report form", this project should be more focused on providing users an interactive means to explore data themselves.
+**[View Live Preview](https://blackrockdigital.github.io/startbootstrap-simple-sidebar/)**
 
-Just as with the first project, you will be asked to conduct a 10 minute presentation that lays out your theme, coding approach, data munging techniques, and final visualization.
+## Status
 
-You may choose a project of any theme, but we encourage you to think broadly. The universe is wide and expansive. Don't limit yourself to what you know.
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/BlackrockDigital/startbootstrap-simple-sidebar/master/LICENSE)
+[![npm version](https://img.shields.io/npm/v/startbootstrap-simple-sidebar.svg)](https://www.npmjs.com/package/startbootstrap-simple-sidebar)
+[![Build Status](https://travis-ci.org/BlackrockDigital/startbootstrap-simple-sidebar.svg?branch=master)](https://travis-ci.org/BlackrockDigital/startbootstrap-simple-sidebar)
+[![dependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-simple-sidebar/status.svg)](https://david-dm.org/BlackrockDigital/startbootstrap-simple-sidebar)
+[![devDependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-simple-sidebar/dev-status.svg)](https://david-dm.org/BlackrockDigital/startbootstrap-simple-sidebar?type=dev)
 
-You will have roughly two weeks to complete this project. You will present your final work on Wednesday (March 21, 2018). You will have ample time in class to work with your group (but expect to put in some long nights in the days ahead).
+## Download and Installation
 
-Specific Requirements:
+To begin using this template, choose one of the following options to get started:
+* [Download the latest release on Start Bootstrap](https://startbootstrap.com/template-overviews/simple-sidebar/)
+* Install via npm: `npm i startbootstrap-simple-sidebar`
+* Clone the repo: `git clone https://github.com/BlackrockDigital/startbootstrap-simple-sidebar.git`
+* [Fork, Clone, or Download on GitHub](https://github.com/BlackrockDigital/startbootstrap-simple-sidebar)
 
-Your visualization must include a Python Flask powered RESTful API, HTML/CSS, JavaScript, and at least one database (MySQL, MongoDB, SQLite, etc.)
+## Usage
 
-Your project should fall into one of the below four tracks:
-A custom "creative" D3.js project (i.e. non-standard graph or chart)
+### Basic Usage
 
-A combination of Web Scraping and Leaflet or Plotly
+After downloading, simply edit the HTML and CSS files included with the template in your favorite text editor to make changes. These are the only files you need to worry about, you can ignore everything else! To preview the changes you make to the code, you can open the `index.html` file in your web browser.
 
-A dashboard page with multiple charts all updating from the same data
+### Advanced Usage
 
-A "thick" server that performs multiple manipulations on data in a database prior to visualization (must be approved)
+After installation, run `npm install` and then run `gulp dev` which will open up a preview of the template in your default browser, watch for changes to core template files, and live reload the browser when changes are saved. You can view the `gulpfile.js` to see which tasks are included with the dev environment.
 
-Your project should include at least one JS library that we did not cover.
+## Bugs and Issues
 
-Your project must be powered by a dataset with at least 100 records.
+Have a bug or an issue with this template? [Open a new issue](https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](http://startbootstrap.com/template-overviews/simple-sidebar/).
 
-Your project must include some level of user-driven interaction (e.g. menus, dropdowns, textboxes, etc.)
+## Custom Builds
 
-Your final visualization should ideally include at least three views
+You can hire Start Bootstrap to create a custom build of any template, or create something from scratch using Bootstrap. For more information, visit the **[custom design services page](https://startbootstrap.com/bootstrap-design-services/)**.
 
-Weekly Schedule:
-Today: Between now and Saturday, you will need to start brainstorming topics with your group and researching potential datasets. Your focus should specifically center around:
-Selecting a Topic 	
-Finding a Dataset
-Finding Inspiration
-"Sketching" your ideal visuals
-Creating a 1-Page Proposal
+## About
 
-End-of-Class Saturday: You will need to create a 1 page proposal. The proposal should include:
+Start Bootstrap is an open source library of free Bootstrap templates and themes. All of the free templates and themes on Start Bootstrap are released under the MIT license, which means you can use them for any purpose, even for commercial projects.
 
-A brief articulation of your chosen topic and rationale
+* https://startbootstrap.com
+* https://twitter.com/SBootstrap
 
-A link to your dataset(s) and a screenshot of the metadata if it exists.
+Start Bootstrap was created by and is maintained by **[David Miller](http://davidmiller.io/)**, Owner of [Blackrock Digital](http://blackrockdigital.io/).
 
-3-4 screenshots of relevant "inspiring" visualizations that frame your creative fodder
+* http://davidmiller.io
+* https://twitter.com/davidmillerskt
+* https://github.com/davidtmiller
 
-A sketch of the final design
+Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
 
-A link to the primary GitHub repository you'll be housing your work in
+## Copyright and License
 
-
-March 12, 14, 17, 19; Project Work
-March 21: Presentations!
+Copyright 2013-2018 Blackrock Digital LLC. Code released under the [MIT](https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/gh-pages/LICENSE) license.
