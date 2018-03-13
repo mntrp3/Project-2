@@ -10,7 +10,7 @@ from flask import Flask
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 
-
+app = Flask(__name__)
 listOfPrimeGeoLocs = []
 allGeoLocsWeatherLocs = {}
 allWeatherLocs = []
@@ -19,27 +19,26 @@ weatherEndpoint = "https://api.weather.gov/"
 
 #do initialization tasks: setting and checking the locations (if necessary), prep the hourly web reqs, any additional web service needed.
 def init():
-
+	global app
 	getLocs()
 	
 	initScheduler()
-	
-	
-    app.run(debug=False)
+	app.run(debug=False)
 
 def getLocs():
+	global listOfPrimeGeoLocs, allGeoLocsWeatherLocs, allWeatherLocs, weatherEndpoint
 	
 	#check config file
-	if !os.path.exists("config.json"):
+	if not os.path.exists("config.json"):
 		#get initial core locations
 		counter = 0
 		stop = False
-		while(!stop):
-			initLat= input("latitude of location "+str(counter)+"? ('fin' to stop)")
-			if(initLocation=='fin':
+		while(not stop):
+			initLat= input("latitude of location "+str(counter)+"? ('fin' to stop) ")
+			if(initLat=='fin'):
 				stop = True
 				break
-			initLon = input("longitude of location "+str(counter)+"? (-180 < lon <= 180")
+			initLon = input("longitude of location "+str(counter)+"? (-180 < lon <= 180) ")
 			doubleLat = -91
 			doubleLon = -181
 			try:
@@ -48,9 +47,9 @@ def getLocs():
 			except:
 				print("error on input, values must be a valid float")
 				continue
-			if(doubleLat<90 && doubleLat > -90 && doubleLon>-180 && doubleLon<=180):
+			if(doubleLat<90 and doubleLat > -90 and doubleLon>-180 and doubleLon<=180):
 				listOfPrimeGeoLocs.append((doubleLon,doubleLat))
-				counter++
+				counter+=1
 			else:
 				print("error on input, values must be within normal Earth range")
 				continue
@@ -73,14 +72,14 @@ def getLocs():
 	
 	listOfPrimeGeoLocs = configData["primaryGeoLocations"]
 	
-	if(!("geoWeatherLocMap" in configData)):
+	if(not ("geoWeatherLocMap" in configData)):
 		allGeoLocsWeatherLocs = getAllGeoWeatherLocMappings()
 		configData["geoWeatherLocMap"]=allGeoLocsWeatherLocs
 		configChanged = True
 	else:
 		allGeoLocsWeatherLocs = configData['geoWeatherLocMap']
 	
-	if(!("weatherLocs" in configData)):
+	if(not ("weatherLocs" in configData)):
 		allWeatherLocs = numpy.unique(allGeoLocsWeatherLocs.values())
 		configData["weatherLocs"]=allWeatherLocs
 		configChanged = True
@@ -98,9 +97,10 @@ def getLocs():
 	
 	
 #check api.weather.gov for the office and region for all the locations we gonna check.
-def getAllGeoWEatherLocMappings():
+def getAllGeoWeatherLocMappings():
+	global listOfPrimeGeoLocs, allGeoLocsWeatherLocs, allWeatherLocs, weatherEndpoint
 	#get a resolution of full locations to 0.02 degrees spacing lat/lon, so approximate distance between points is ~ 0.15 mi (i.e. over a thousand feet)
-	fullSet = [(2*round(loc[0]/2.0,2),2*round(loc[1]/2.0,2)) for loc in primaryGeoLocations]
+	fullSet = [(2*round(loc[0]/2.0,2),2*round(loc[1]/2.0,2)) for loc in listOfPrimeGeoLocs]
 	
 	locSet = []
 	retDict = {}
@@ -122,12 +122,12 @@ def getAllGeoWEatherLocMappings():
 		latMaxLow = curLat+lowOffset+stepLow
 		latMaxHigh =curLat + highOffset + stepHigh
 		#high res
-		for lon in range(lonMinHigh,lonMaxHigh, stepHigh):
-			for lat in range(latMinHigh,latMaxHigh, stepHigh):
+		for lon in numpy.arange(lonMinHigh,lonMaxHigh, stepHigh):
+			for lat in numpy.arange(latMinHigh,latMaxHigh, stepHigh):
 				locSet.append((lon,lat))
 		
-		for lon in range(lonMinLow,lonMaxLow, stepLow):
-			for lat in range(latMinLow,latMaxLow, stepLow):
+		for lon in numpy.arange(lonMinLow,lonMaxLow, stepLow):
+			for lat in numpy.arange(latMinLow,latMaxLow, stepLow):
 				locSet.append((lon,lat))
 				
 	locSet = numpy.unique(locSet)
@@ -147,6 +147,7 @@ def getAllGeoWEatherLocMappings():
 	
 #init the scheduler for periodically checking weather.api.gov
 def initScheduler():
+	global listOfPrimeGeoLocs, allGeoLocsWeatherLocs, allWeatherLocs, weatherEndpoint
 	
 	scheduler = BackgroundScheduler()
 	scheduler.start()
@@ -160,6 +161,7 @@ def initScheduler():
 	atexit.register(lambda: scheduler.shutdown())
 	
 def checkWeather():
+	global listOfPrimeGeoLocs, allGeoLocsWeatherLocs, allWeatherLocs, weatherEndpoint
     #print time.strftime("%A, %d. %B %Y %I:%M:%S %p")
 	hackTime = datetime.datetime.now()
 	strTime = hackTime.strftime("%y_%m_%d_%H")
@@ -168,10 +170,10 @@ def checkWeather():
 		gridX = item[1]
 		gridY = item[2]
 		dirPath = "/data/"+office+"/"+str(gridX)+"_"+str(gridY)
-		if!(os.path.isdir(dirPath)):
+		if not(os.path.isdir(dirPath)):
 			try:
 				os.makedirs(dirPath)
-			except Exception, e:
+			except Exception as e:
 				print("Error: could not create required directory.")
 				print(e)
 				sys.exit(1)
@@ -194,7 +196,7 @@ def checkWeather():
 		try:
 			#the endpoints
 			writeBlob["gridData"] = requests.get(gridDataEndpoint).json()
-		except Exception, e:
+		except Exception as e:
 			print("Warning: "+str(item)+" failed on grid data weather request.")
 			print(e)
 			time.sleep(5)
@@ -203,7 +205,7 @@ def checkWeather():
 		try:
 			#the endpoints
 			writeBlob["hourlyData"] = requests.get(hourlyEndpoint).json()
-		except Exception, e:
+		except Exception as e:
 			print("Warning: "+str(item)+" failed on hourly forecast weather request.")
 			print(e)
 			time.sleep(5)
@@ -212,7 +214,7 @@ def checkWeather():
 		try:
 			#the endpoints
 			writeBlob["forecastData"] = requests.get(forecastData).json()
-		except Exception, e:
+		except Exception as e:
 			print("Warning: "+str(item)+" failed on forecast weather request.")
 			print(e)
 			time.sleep(5)
@@ -227,7 +229,7 @@ def checkWeather():
 			continue
 
 if __name__ == "__main__":
-	main()
+	init()
 
 
 
