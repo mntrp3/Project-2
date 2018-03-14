@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Thundersnow</title>
+    <title>DC Weather Collaborative</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -15,6 +15,8 @@
 
     <!-- Custom styles for this template -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/custom.css">
+
 
 </head>
 
@@ -26,10 +28,6 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="#">
-                        Start Bootstrap
-                    </a>
-                </li>
                 <li>
                     <a href="#">Forecast Dropdown</a>
                 </li>
@@ -45,7 +43,7 @@
                 <li>
                     <a href="#">About</a>
                 </li>
-                
+
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -53,9 +51,15 @@
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
-                <h1>Simple Sidebar</h1>
-                <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
-                <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
+                <h1>Weather Predictions</h1>
+                <p>We are creating a Multi- Line Graph with temperature information, d3/plotly will likely be the tool to use. <br>
+                Line graph will have this data: y will = temperature & x will = hours of that specific day <br>
+                Lines will be actual temperature, temperature that was predicted for that time the day before, temperature predicted the week before, and bonus: last year's hourly temperature.
+                <br>tool tip will calculate the accuracy percentage by the actual temperature of the hour.
+                <br>actual temperature will be a line that does not end until the end of the day.
+                <br>
+                guests can select a box and whiskers plot using the same data</p>
+                <p></p>
                 <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
             </div>
         </div>

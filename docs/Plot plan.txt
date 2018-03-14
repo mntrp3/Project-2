@@ -1,10 +1,10 @@
-// We are creating  Multi- Line Graph with temerature information, d3/plotly will likely be the tool to use
+// We are creating  Multi- Line Graph with temperature information, d3/plotly will likely be the tool to use
 //Line graph will have this data:
 // y will = temperature
 // x will = hours of that specific day
 // Lines will be actual temperature, temperature that was predicted for that time the day before, temperature predicted the week before, and bonus: last year's hourly temperature.
 //tool tip will calculate the accuracy percentage by the actual temperature of the hour
-// actual temperature will be a line that does not end until the end of the day. 
+// actual temperature will be a line that does not end until the end of the day.
 
 guests can select a box and whiskers plot using the same data
 
@@ -15,15 +15,14 @@ Timeline will be hourly based and move icons around the map based on the hour an
 Bind click event will tell you the temperature, wind speed, chance of precipitation
 
 //////
-//Using reagan national airport's weather station as a center, gather one year's worth of (daily) data from weather.gov to create a graph using the vega weather bubble plot 
-We will be plotting maximum daily temperature (y), by day (x) using months as the x-tick, with weather phenomena (sun, snow, rain, fog, drizzle), and precipitation as the size of the circle. 
+//Using reagan national airport's weather station as a center, gather one year's worth of (daily) data from weather.gov to create a graph using the vega weather bubble plot
+We will be plotting maximum daily temperature (y), by day (x) using months as the x-tick, with weather phenomena (sun, snow, rain, fog, drizzle), and precipitation as the size of the circle.
 
-A horizontal bar chart will be placed underneath to describe the weather phenomena (sun, snow, rain, fog, drizzle) with the number of records of that phenomena. 
+A horizontal bar chart will be placed underneath to describe the weather phenomena (sun, snow, rain, fog, drizzle) with the number of records of that phenomena.
 
 
 /////
 
 Daily trend of past month with temperature or precipitation to plot
 
-Line chart  temperature = y, day = x or precipitation = y, day = x. 
-
+Line chart  temperature = y, day = x or precipitation = y, day = x.
