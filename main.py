@@ -22,7 +22,7 @@ def init():
 	global app
 	getLocs()
 	
-	#initScheduler()
+	initScheduler()
 	checkWeather()
 	app.run(debug=False)
 
@@ -67,7 +67,7 @@ def getLocs():
 			sys.exit(1)
 	#load config file
 	configData = {}	
-	configChanged = False
+	configChanged = True
 	with open('config.json', 'r') as configFileIn:
 		 configData = json.load(configFileIn)
 	
@@ -78,7 +78,7 @@ def getLocs():
 	#if(not ("geoWeatherLocMap" in configData)):
 	allGeoLocsWeatherLocs = getAllGeoWeatherLocMappings()
 	print("greater geo weather loc mappings:")
-	print(allGeoLocsWeatherLocs)
+	#print(allGeoLocsWeatherLocs)
 	#	configData["geoWeatherLocMap"]=allGeoLocsWeatherLocs
 	#	configChanged = True
 	#else:
@@ -88,7 +88,7 @@ def getLocs():
 	##allWeatherLocs = numpy.unique(allGeoLocsWeatherLocs.values(), axis=0)
 	allWeatherLocs = allGeoLocsWeatherLocs.values()
 	print("greater office grid mappings:")
-	print(allWeatherLocs)
+	#print(allWeatherLocs)
 		#configData["weatherLocs"]=allWeatherLocs
 		#configChanged = True
 	#else:
@@ -145,7 +145,7 @@ def getAllGeoWeatherLocMappings():
 	#locSet = numpy.unique(locSet, axis=0)
 	
 	print("locset before apiCalls")
-	print(locSet)
+	#print(locSet)
 	
 	#the part where we call the weather api for its locations
 	#'https://api.weather.gov/points/lat,lon
@@ -187,7 +187,7 @@ def checkWeather():
 		office = item[0]
 		gridX = item[1]
 		gridY = item[2]
-		dirPath = "/data/"+office+"/"+str(gridX)+"_"+str(gridY)
+		dirPath = "data/"+office+"/"+str(gridX)+"_"+str(gridY)
 		if not(os.path.isdir(dirPath)):
 			try:
 				os.makedirs(dirPath)
@@ -217,8 +217,8 @@ def checkWeather():
 		except Exception as e:
 			print("Warning: "+str(item)+" failed on grid data weather request.")
 			print(e)
-			time.sleep(5)
-			continue
+			#time.sleep(5)
+			#continue
 			
 		try:
 			#the endpoints
@@ -226,17 +226,17 @@ def checkWeather():
 		except Exception as e:
 			print("Warning: "+str(item)+" failed on hourly forecast weather request.")
 			print(e)
-			time.sleep(5)
-			continue
+			#time.sleep(5)
+			#continue
 			
 		try:
 			#the endpoints
-			writeBlob["forecastData"] = requests.get(forecastData).json()
+			writeBlob["forecastData"] = requests.get(forecastEnpoint).json()
 		except Exception as e:
 			print("Warning: "+str(item)+" failed on forecast weather request.")
 			print(e)
-			time.sleep(5)
-			continue
+			#time.sleep(5)
+			#continue
 		
 		#write the data (later to be replaced with db access)
 		try:
