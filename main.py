@@ -6,9 +6,13 @@ import requests
 import json
 import numpy
 import datetime
+import zipfile
+
 from flask import Flask
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
+
+
 
 app = Flask(__name__)
 listOfPrimeGeoLocs = []
@@ -110,15 +114,16 @@ def getLocs():
 def getAllGeoWeatherLocMappings():
 	global listOfPrimeGeoLocs, allGeoLocsWeatherLocs, allWeatherLocs, weatherEndpoint
 	#get a resolution of full locations to 0.02 degrees spacing lat/lon, so approximate distance between points is ~ 0.15 mi (i.e. over a thousand feet)
-	fullSet = [(2*round(loc[0]/2.0,2),2*round(loc[1]/2.0,2)) for loc in listOfPrimeGeoLocs]
-	
+	#fullSet = [(2*round(loc[0]/2.0,2),2*round(loc[1]/2.0,2)) for loc in listOfPrimeGeoLocs]
+	#going with finer resolution since 0.02 was a little bit too low, and we cut out excess gridpoints later anyways.
+	fullSet = [(round(loc[0],2),round(loc[1],2)) for loc in listOfPrimeGeoLocs]
 	locSet = []
 	retDict = {}
 	
 	highOffset = 0.1
-	lowOffset = 0.4
-	stepLow = 0.2
-	stepHigh = 0.02
+	lowOffset = 0.5
+	stepLow = 0.1
+	stepHigh = 0.01
 	for loc in fullSet:
 		curLon = loc[0]
 		curLat = loc[1]
@@ -187,10 +192,11 @@ def checkWeather():
 		office = item[0]
 		gridX = item[1]
 		gridY = item[2]
-		dirPath = "data/"+office+"/"+str(gridX)+"_"+str(gridY)
-		if not(os.path.isdir(dirPath)):
+		dataDir = "data/"
+		dirPath = office+"/"+str(gridX)+"_"+str(gridY)
+		if not(os.path.isdir(dataDir)):
 			try:
-				os.makedirs(dirPath)
+				os.makedirs(dataDir)
 			except Exception as e:
 				print("Error: could not create required directory.")
 				print(e)
@@ -238,22 +244,28 @@ def checkWeather():
 			#time.sleep(5)
 			#continue
 		
+		writingMode = 'w'
+		if(os.path.exists(dataDir) and os.path.isfile(dataDir+'runningArchive.zip')):
+			writingMode = 'a'
+		
 		#write the data (later to be replaced with db access)
 		try:
-			with open(os.path.join(dirPath,strTime+'.json'), 'w') as curFileOut:
-				json.dump(writeBlob, curFileOut)
+			zf = zipfile.ZipFile(dataDir+'runningArchive.zip', 
+								 mode='a',
+								 compression=zipfile.ZIP_DEFLATED, 
+								 )
+			try:
+				zf.writestr(os.path.join(dirPath,strTime+'.json'), json.dumps(writeBlob))
+			except:
+				print("error zipping data file "+ str(item)+"")
+			finally:
+				zf.close()
+			#with open(os.path.join(dirPath,strTime+'.json'), 'w') as curFileOut:
+			#	json.dump(writeBlob, curFileOut)
 		except:
-			print("error writing data file "+ str(item)+", now exiting")
+			print("error writing data file "+ str(item)+", moving to next item")
 			continue
 
 if __name__ == "__main__":
 	init()
-
-
-
-
-
-
-
-
 
