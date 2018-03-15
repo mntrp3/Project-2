@@ -1,0 +1,63 @@
+multiline graph
+
+actual hourly tempurature in Fahrenheit for the day
+forecasted 1 day in advance hourly temperature Farhenheit
+forecasted 3 days in advance hourly temperature Farhenheit
+
+columns : 
+
+actual TempF, Hour, 1 day forecasted tempF by hour, 3 day forecasted tempF by hour
+
+Leaflet and Timeline Plot
+
+7 day forecast 
+
+columns :
+
+lat, lon , time of day (ex. Saturday, Saturday Night), day, predicted temp F, wind speed, wind direction, icon, short Forecast, detailed Forecast
+
+	Information on map for leaflet: 
+
+	lat, lon, 
+
+	markers: 
+	icon
+
+	popups:
+	predicted temp F, wind speed, wind direction, short Forecast, percentage we think it's accurate
+
+	timeline: 
+
+	time of day, day 
+
+	on webpage in paragraph:
+
+	detailed Forecast
+
+
+Yearly plot of vega
+
+columns:
+
+day, max temp, weather type (short Forecast), precipitation
+
+Horizontal bar chart
+
+group number of days, with weather type
+
+columns:
+weather type 
+
+Trend line graph
+
+columns : 
+
+day, actual tempF, actual precipitation 
+
+
+
+
+
+
+
+
