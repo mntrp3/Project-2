@@ -204,10 +204,10 @@ def checkWeather():
 		writeBlob = {}
 		#forecastGridData
 		gridDataEndpoint = weatherEndpoint+"gridpoints/"+office+"/"+str(gridX)+","+str(gridY)
-		#forecastHourly
-		hourlyEndpoint = gridDataEndpoint +"/hourly"
 		#forecast
 		forecastEnpoint=gridDataEndpoint +"/forecast"
+		#forecastHourly
+		hourlyEndpoint = forecastEnpoint +"/hourly"
 		#endpoint1:
 			
 			
