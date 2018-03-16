@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>DC Weather Collaborative</title>
+    <!--This page is for Chart #1
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Simple Sidebar - Start Bootstrap Template</title>
+
+    <!-- kills favicon.ico 404 error -->
+    <link rel="icon" href="data:;base64,iVBORwOKGO=">
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/custom.css">
+
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+          <!-- Sidebar -->
+          <div id="sidebar-wrapper">
+              <ul class="sidebar-nav">
+                  <li class="sidebar-brand">
+                      <a href="index.html">Multi-Line Graph</a>
+                  </li>
+                  <li>
+                      <a href="index2.html">Weather Map</a>
+                  </li>
+                  <li>
+                      <a href="index3.html">Yearly Weather Chart</a>
+                  </li>
+                  <li>
+                    <!-- This will link to our data stored on Google -->
+                      <a href="#">Raw Data</a>
+                  </li>
+                  <li>
+                    <!-- Do we want this to be where we put our write-up of how we made this -->
+                      <a href="#">About</a>
+                  </li>
+
+              </ul>
+          </div>
+          <!-- /#sidebar-wrapper -->
+
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+              <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
+                <h1>Weather Predictions</h1>
+                <p> <h3>Chart # 3</h3>
+                Using the Reagan National airport's weather station as a center, present a year's worth of daily data from weather.gov to create a graph using the vega weather bubble plot<br>
+                We will be plotting max daily temp F on (y), by day (x)  as the x-tick, with weather phenomena (sun, snow, rain, fog, drizzle) for color, and precipitation as the size of the circle. <br>
+                A horizontal bar chart will be placed underneath to describe the weather phenomena (sun, snow, rain, fog, drizzle) with the number of records of that phenomena.
+                <br>
+                </p>
+                <p></p>
+
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+
+</body>
+
+</html>
