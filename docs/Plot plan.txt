@@ -1,3 +1,5 @@
+Chart #1
+////////
 // We are creating  Multi- Line Graph with temperature information, d3/plotly will likely be the tool to use
 //Line graph will have this data:
 // y will = temperature
@@ -9,20 +11,19 @@
 guests can select a box and whiskers plot using the same data
 
 //////
-
+Chart # 2
 //Using leaflet and timeline plug in show weather for 3 days or 7 days forecasted with a drop down out including icons of rain, snow, hail etc...
 Timeline will be daily (morning and evening) based and move icons around the map based on the time of day and location of issues
 Bind click event will tell you the temperature, wind speed, chance of precipitation, potentially show percent accuracy, icons will be presented on map
-
+Chart # 3
 //////
 //Using reagan national airport's weather station as a center, gather one year's worth of (daily) data from weather.gov to create a graph using the vega weather bubble plot
 We will be plotting maximum daily temperature (y), by day (x) using hours as the x-tick, with weather phenomena (sun, snow, rain, fog, drizzle), and precipitation as the size of the circle.
 
 A horizontal bar chart will be placed underneath to describe the weather phenomena (sun, snow, rain, fog, drizzle) with the number of records of that phenomena.
 
-
-/////
-
+Chart #4
+////////
 Daily trend of past month with temperature or precipitation to plot
 
 Line chart  temperature = y, day = x or precipitation = y, day = x.
