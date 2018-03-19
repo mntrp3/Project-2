@@ -2,15 +2,20 @@
 <html lang="en">
 
 <head>
-    <title>DC Weather Collaborative</title>
-    <!--This page is for Chart #1
+    <title>DC Weather Collaborative Chart #2</title>
+    <!--This page is for Chart #1 -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
     <title>Simple Sidebar - Start Bootstrap Template</title>
+    <!-- Leaflet JS & CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
 
+    <!-- d3 JS -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
     <!-- kills favicon.ico 404 error -->
     <link rel="icon" href="data:;base64,iVBORwOKGO=">
     <!-- Bootstrap core CSS -->
@@ -18,7 +23,7 @@
 
     <!-- Custom styles for this template -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
 
 
 </head>
@@ -56,17 +61,15 @@
             <div class="container-fluid">
               <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
                 <h1>Weather Predictions</h1>
-                <p><h3>Chart # 2</h3>
-                //Using Leaflet & the timeline plugin show weather for 3 days or 7 days forecasted with a drop down including icons of rain, snow, hail etc...<br>
+              <!--  <p><h3>Chart # 2</h3> -->
+                          <!--  //Using Leaflet & the timeline plugin show weather for 3 days or 7 days forecasted with a drop down including icons of rain, snow, hail etc...<br>
                 Timeline will be daily (morning and evening) based and move icons around the map based on the time of day and location of issues<br>
-                Bind click event will tell you the temperature, wind speed, chance of precipitation, potentially show percent accuracy, icons will be presented on map<br>
-                <br>
+                Bind click event will tell you the temperature, wind speed, chance of precipitation, potentially show percent accuracy, icons will be presented on map<br> -->
                 </p>
-                <p></p>
 
             </div>
         </div>
-        <!-- /#page-content-wrapper -->
+        <div id="map"></div>
 
 
 
@@ -84,7 +87,7 @@
         $("#wrapper").toggleClass("toggled");
     });
     </script>
-
+  <script type="text/javascript" src="logic.js"></script>
 </body>
 
 </html>
