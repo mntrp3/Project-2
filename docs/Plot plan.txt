@@ -13,7 +13,7 @@ guests can select a box and whiskers plot using the same data
 //////
 Chart # 2
 //Using leaflet and timeline plug in show weather for 3 days or 7 days forecasted with a drop down out including icons of rain, snow, hail etc...
-Timeline will be daily (morning and evening) based and move icons around the map based on the time of day and location of issues
+Timeline will be daily (morning and evening) based and move icons around the map based on the time of day and location of weather events
 Bind click event will tell you the temperature, wind speed, chance of precipitation, potentially show percent accuracy, icons will be presented on map
 Chart # 3
 //////

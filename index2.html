@@ -2,15 +2,20 @@
 <html lang="en">
 
 <head>
-    <title>DC Weather Collaborative</title>
-    <!--This page is for Chart #1
+    <title>DC Weather Collaborative Chart #1</title>
+    <!--This page is for Chart #1 -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
     <title>Simple Sidebar - Start Bootstrap Template</title>
+    <!-- Leaflet JS & CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
 
+    <!-- d3 JS -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
     <!-- kills favicon.ico 404 error -->
     <link rel="icon" href="data:;base64,iVBORwOKGO=">
     <!-- Bootstrap core CSS -->
@@ -63,11 +68,12 @@
                 <br>
                 </p>
                 <p></p>
+                <div id="map"></div>
 
             </div>
         </div>
-        <!-- /#page-content-wrapper -->
 
+<script type="text/javascript" src="logic.js"></script>
 
 
 
