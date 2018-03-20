@@ -1,93 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
-
 <head>
-    <title>DC Weather Collaborative</title>
-    <!--This page is for Chart #1
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <meta charset="utf-8">
+  <script src="https://vega.github.io/vega/vega.js"></script>
+<!-- kills favicon.ico 404 error in Flask app-->
+ <link rel="icon" href="data:;base64,iVBORwOKGO=">
 
-    <title>Simple Sidebar - Start Bootstrap Template</title>
-
-    <!-- kills favicon.ico 404 error -->
-    <link rel="icon" href="data:;base64,iVBORwOKGO=">
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="https://d3js.org/d3-time-format.v2.min.js"></script>
-  	<script src="https://d3js.org/d3.v4.min.js"></script>
-    <!-- Custom styles for this template -->
-    <link href="css/simple-sidebar.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/custom.css">
-
-
+  <script src="https://cdn.jsdelivr.net/npm/vega@3"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+    
+    .vega-actions a {
+      padding: 0.2em;
+    }
+  </style>
 </head>
 
-<body>
-
-    <div id="wrapper">
-
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="index.html">Multi-Line Graph</a>
-                </li>
-                <li>
-                    <a href="index2.html">Weather Map</a>
-                </li>
-                <li>
-                    <a href="index3.html">Yearly Weather Chart</a>
-                </li>
-                <li>
-                  <!-- This will link to our data stored on Google -->
-                    <a href="#">Raw Data</a>
-                </li>
-                <li>
-                <!-- Do we want this to be where we put our write-up of how we made this -->
-                    <a href="#">About</a>
-                </li>
-
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
-
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-              <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
-                <h1>Weather Predictions</h1>
-                <p>We are creating a Multi- Line Graph with temperature information, d3/plotly will likely be the tool to use. <br>
-                Line graph will have this data: y will = temperature & x will = hours of that specific day <br>
-                Lines will be actual temperature, temperature that was predicted for that time the day before, temperature predicted the week before, and bonus: last year's hourly temperature.
-                <br>tool tip will calculate the accuracy percentage by the actual temperature of the hour.
-                <br>actual temperature will be a line that does not end until the end of the day.
-                <br>
-                guests can select a box and whiskers plot using the same data</p>
-                <p></p>
-                <div id="plot"></div>
-                <script src="../Project-2/multi_line_graph/daily_predicted_multiline.js"></script>
-            </div>
-        </div>
-        <!-- /#page-content-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
-
+<body>  
+  <div id="vis"></div>
+  
+  <script>
+    const vega_scatter = "vega_scatter.json";
+  	vegaEmbed('#vis', vega_scatter).catch(console.warn);
+  </script>
 </body>
-
-</html>
