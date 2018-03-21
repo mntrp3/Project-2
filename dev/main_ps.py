@@ -1,3 +1,7 @@
+# ----------------------------------
+# Dependencies
+# ----------------------------------
+import sys
 import time
 import atexit
 import os
@@ -12,7 +16,16 @@ from flask import Flask
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 
+# Imports the method used for connecting to DBs
+from sqlalchemy import create_engine
 
+# Imports the methods needed to abstract classes into tables
+from sqlalchemy.ext.declarative import declarative_base
+
+# Allow us to declare column types
+from sqlalchemy import Column, Integer, String, Float, DateTime
+
+firstarg = sys.argv[1]
 
 app = Flask(__name__)
 listOfPrimeGeoLocs = []
@@ -20,19 +33,88 @@ allGeoLocsWeatherLocs = {}
 allWeatherLocs = []
 weatherEndpoint = "https://api.weather.gov/"
 
+# ----------------------------------
+# Create Classes
+# ----------------------------------
+# Sets an object to utilize the default declarative base in SQL Alchemy
+Base = declarative_base()
+
+# Creates Classes which will serve as the anchor points for our Tables
+class EarthStations(Base):
+    __tablename__ = 'earthStations'
+    id = Column(Integer, primary_key=True)
+    fullName = Column(String(255))
+    lat = Column(Float)
+    long = Column(Float)
+    currentAccuracy = Column(Float)
+    gridpoint = Column(String(255))
+
+class EarthStationObservations(Base):
+    __tablename__ = 'earthStationObservations'
+    id = Column(Integer, primary_key=True)
+    esTag = Column(String(255))
+    dayAndHour = Column(String(255))
+    observedTemp = Column(Float)
+    accuracy = Column(Float)
+
+class Forecast(Base):
+    __tablename__ = 'forecast'
+    id = Column(Integer, primary_key=True)
+    gridId = Column(String(255))
+    dayAndHour = Column(String(255))
+    hoursForward = Column(Integer)
+    daysHoursForecasted = Column(String(255))
+    temperature = Column(Float)
+    icon = Column(Integer)
+	shortCast = Column(String(255))
+	longCast = Column(String(255))
+
+class GridStations(Base):
+    __tablename__ = 'gridStations'
+    id = Column(Integer, primary_key=True)
+    gridPoint = Column(String(255))
+
+class Icons(Base):
+    __tablename__ = 'icons'
+    id = Column(Integer, primary_key=True)
+    icon = Column(String(255))
+
+class Locations(Base):
+    __tablename__ = 'locations'
+    id = Column(Integer, primary_key=True)
+    lat = Column(Float)
+    long = Column(Float)
+    esTag = Column(String(255))
+
+# Create Database Connection
+# ----------------------------------
+# Creates a connection to our DB using the database Connect Engine
+engine = create_engine('postgresql://postgres:' + firstarg + '@localhost:5432/Project_2')
+conn = engine.connect()
+
+# Create a "Metadata" Layer That Abstracts our SQL Database
+# ----------------------------------
+# Create (if not already in existence) the tables associated with our classes.
+Base.metadata.create_all(engine)
+
+# Create a Session Object to Connect to DB
+# ----------------------------------
+# Session is a temporary binding to our DB
+from sqlalchemy.orm import Session
+session = Session(bind=engine)
 
 #do initialization tasks: setting and checking the locations (if necessary), prep the hourly web reqs, any additional web service needed.
 def init():
 	global app
 	getLocs()
-	
+
 	initScheduler()
 	checkWeather()
 	app.run(debug=False)
 
 def getLocs():
 	global listOfPrimeGeoLocs, allGeoLocsWeatherLocs, allWeatherLocs, weatherEndpoint
-	
+
 	#check config file
 	if not os.path.exists("config.json"):
 		#get initial core locations
@@ -58,27 +140,27 @@ def getLocs():
 			else:
 				print("error on input, values must be within normal Earth range")
 				continue
-			
+
 			counter+=1
-		
+
 		outputDict = {"primaryGeoLocations":listOfPrimeGeoLocs}
 		try:
 			with open('config.json', 'w') as configFileOut:
 				json.dump(outputDict, configFileOut)
-		
+
 		except:
 			print("error writing config file, now exiting")
 			sys.exit(1)
 	#load config file
-	configData = {}	
+	configData = {}
 	configChanged = True
 	with open('config.json', 'r') as configFileIn:
 		 configData = json.load(configFileIn)
-	
+
 	print(configData)
-	
+
 	listOfPrimeGeoLocs = configData["primaryGeoLocations"]
-	
+
 	#if(not ("geoWeatherLocMap" in configData)):
 	allGeoLocsWeatherLocs = getAllGeoWeatherLocMappings()
 	print("greater geo weather loc mappings:")
@@ -87,7 +169,7 @@ def getLocs():
 	#	configChanged = True
 	#else:
 	#	allGeoLocsWeatherLocs = configData['geoWeatherLocMap']
-	
+
 	#if(not ("weatherLocs" in configData)):
 	##allWeatherLocs = numpy.unique(allGeoLocsWeatherLocs.values(), axis=0)
 	allWeatherLocs = allGeoLocsWeatherLocs.values()
@@ -104,12 +186,12 @@ def getLocs():
 				json.dump(configData, configFileOut)
 		except:
 			print("error modifying config file, now continuing")
-			
+
 	print("location initialization and update complete.")
-	
+
 	#sys.exit(0)
-	
-	
+
+
 #check api.weather.gov for the office and region for all the locations we gonna check.
 def getAllGeoWeatherLocMappings():
 	global listOfPrimeGeoLocs, allGeoLocsWeatherLocs, allWeatherLocs, weatherEndpoint
@@ -119,7 +201,7 @@ def getAllGeoWeatherLocMappings():
 	fullSet = [(round(loc[0],2),round(loc[1],2)) for loc in listOfPrimeGeoLocs]
 	locSet = []
 	retDict = {}
-	
+
 	highOffset = 0.1
 	lowOffset = 0.5
 	stepLow = 0.1
@@ -140,18 +222,18 @@ def getAllGeoWeatherLocMappings():
 		for lon in numpy.arange(lonMinHigh,lonMaxHigh, stepHigh):
 			for lat in numpy.arange(latMinHigh,latMaxHigh, stepHigh):
 				locSet.append((lon,lat))
-				
-		
+
+
 		for lon in numpy.arange(lonMinLow,lonMaxLow, stepLow):
 			for lat in numpy.arange(latMinLow,latMaxLow, stepLow):
 				locSet.append((lon,lat))
-		
-		
+
+
 	#locSet = numpy.unique(locSet, axis=0)
-	
+
 	print("locset before apiCalls")
 	#print(locSet)
-	
+
 	#the part where we call the weather api for its locations
 	#'https://api.weather.gov/points/lat,lon
 	for uniqueLocation in locSet:
@@ -163,11 +245,11 @@ def getAllGeoWeatherLocMappings():
 		except:
 			continue
 	return retDict
-	
+
 #init the scheduler for periodically checking weather.api.gov
 def initScheduler():
 	global listOfPrimeGeoLocs, allGeoLocsWeatherLocs, allWeatherLocs, weatherEndpoint
-	
+
 	scheduler = BackgroundScheduler()
 	scheduler.start()
 	scheduler.add_job(
@@ -178,7 +260,7 @@ def initScheduler():
 		replace_existing=True)
 	# Shut down the scheduler when exiting the app
 	atexit.register(lambda: scheduler.shutdown())
-	
+
 def checkWeather():
 	global listOfPrimeGeoLocs, allGeoLocsWeatherLocs, allWeatherLocs, weatherEndpoint
     #print time.strftime("%A, %d. %B %Y %I:%M:%S %p")
@@ -215,8 +297,8 @@ def checkWeather():
 		#forecastHourly
 		hourlyEndpoint = forecastEnpoint +"/hourly"
 		#endpoint1:
-			
-			
+
+
 		try:
 			#the endpoints
 			writeBlob["gridData"] = requests.get(gridDataEndpoint).json()
@@ -225,7 +307,7 @@ def checkWeather():
 			print(e)
 			#time.sleep(5)
 			#continue
-			
+
 		try:
 			#the endpoints
 			writeBlob["hourlyData"] = requests.get(hourlyEndpoint).json()
@@ -234,7 +316,7 @@ def checkWeather():
 			print(e)
 			#time.sleep(5)
 			#continue
-			
+
 		try:
 			#the endpoints
 			writeBlob["forecastData"] = requests.get(forecastEnpoint).json()
@@ -243,16 +325,41 @@ def checkWeather():
 			print(e)
 			#time.sleep(5)
 			#continue
-		
+
 		writingMode = 'w'
 		if(os.path.exists(dataDir) and os.path.isfile(dataDir+'runningArchive.zip')):
 			writingMode = 'a'
-		
+
 		#write the data (later to be replaced with db access)
+#------------------------------------------------------------------------------
+# Example for SQL Alchemy writes
+#------------------------------------------------------------------------------
+# Use the SQL ALchemy methods to run simple "INSERT" statements using the classes and objects
+# for index, row in df.iterrows():
+#    forecast_record = Forecast(gridId = row[0],
+#                               dayAndHour = row[1],
+#                               hoursForward = row[2],
+#                               daysHoursForecasted = row[3],
+#                               temperature = row[4],
+#                               icon = row[5],
+#                               shortCast = row[6],
+#                               longCast = row[7])
+
+#    session.add(forecast_record)
+
+# session.commit()
+
+# Query the Tables
+# ----------------------------------
+# Perform a simple query of the database
+# forecast_list = session.query(Forecast)
+#for item in forecast_list:
+#    print(item.temperature)
+
 		try:
-			zf = zipfile.ZipFile(dataDir+'runningArchive.zip', 
+			zf = zipfile.ZipFile(dataDir+'runningArchive.zip',
 								 mode='a',
-								 compression=zipfile.ZIP_DEFLATED, 
+								 compression=zipfile.ZIP_DEFLATED,
 								 )
 			try:
 				zf.writestr(os.path.join(dirPath,strTime+'.json'), json.dumps(writeBlob))
@@ -268,4 +375,3 @@ def checkWeather():
 
 if __name__ == "__main__":
 	init()
-
