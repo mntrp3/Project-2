@@ -1,0 +1,19 @@
+-- Table: public.locations
+
+-- DROP TABLE public.locations;
+
+CREATE TABLE public.locations
+(
+    id integer NOT NULL DEFAULT nextval('locations_id_seq'::regclass),
+    lat double precision,
+    "long" double precision,
+    "esTag" text COLLATE pg_catalog."default",
+    CONSTRAINT locations_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.locations
+    OWNER to postgres;

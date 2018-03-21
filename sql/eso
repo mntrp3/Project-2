@@ -1,0 +1,20 @@
+-- Table: public."earthStationObservations"
+
+-- DROP TABLE public."earthStationObservations";
+
+CREATE TABLE public."earthStationObservations"
+(
+    id integer NOT NULL DEFAULT nextval('"earthStationObservations_id_seq"'::regclass),
+    "esTag" text COLLATE pg_catalog."default" NOT NULL,
+    "dayAndHour" text COLLATE pg_catalog."default" NOT NULL,
+    "observedTemp" double precision NOT NULL,
+    accuracy double precision,
+    CONSTRAINT "earthStationObservations_pkey" PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."earthStationObservations"
+    OWNER to postgres;

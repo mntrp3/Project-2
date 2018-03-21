@@ -1,0 +1,28 @@
+-- Table: public.forecast
+
+-- DROP TABLE public.forecast;
+
+CREATE TABLE public.forecast
+(
+    id integer NOT NULL DEFAULT nextval('forecast_id_seq'::regclass),
+    "gridId" text COLLATE pg_catalog."default",
+    "dayAndHour" text COLLATE pg_catalog."default",
+    "hoursForward" integer,
+    "daysHoursForecasted" text COLLATE pg_catalog."default",
+    temperature double precision,
+    icon integer,
+    "shortCast" text COLLATE pg_catalog."default",
+    "longCast" text COLLATE pg_catalog."default",
+    CONSTRAINT forecast_pkey PRIMARY KEY (id),
+    CONSTRAINT icon FOREIGN KEY (id)
+        REFERENCES public.icons (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.forecast
+    OWNER to postgres;
