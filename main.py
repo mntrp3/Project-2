@@ -28,20 +28,22 @@ listOfPrimeGeoLocs = []
 allGeoLocsWeatherLocs = {}
 allWeatherLocs = []
 allStationSets = {}
+init_complete = False
 weatherEndpoint = "https://api.weather.gov/"
 
 
 #do initialization tasks: setting and checking the locations (if necessary), prep the hourly web reqs, any additional web service needed.
 def init():
-	global app
+	global app, init_complete
 	getLocs()
-	
+	init_complete = True
 	initScheduler()
 	checkWeather()
 	app.run(debug=False)
 
+#begin background code
 def getLocs():
-	global listOfPrimeGeoLocs, allGeoLocsWeatherLocs, allWeatherLocs, weatherEndpoint
+	global listOfPrimeGeoLocs, allGeoLocsWeatherLocs, allWeatherLocs, weatherEndpoint, allStationSets
 	
 	#check config file
 	if not os.path.exists("config.json"):
@@ -198,10 +200,15 @@ def initScheduler():
 		replace_existing=True)
 	# Shut down the scheduler when exiting the app
 	atexit.register(lambda: scheduler.shutdown())
-	
+
+@app.route('/update/')
 def checkWeather():
-	global listOfPrimeGeoLocs, allGeoLocsWeatherLocs, allWeatherLocs, weatherEndpoint
+	global listOfPrimeGeoLocs, allGeoLocsWeatherLocs, allWeatherLocs, weatherEndpoint, allStationSets, init_complete
     #print time.strftime("%A, %d. %B %Y %I:%M:%S %p")
+	if not init_complete:
+		getLocs()
+		init_complete = True
+	
 	visitedSet = {}
 	hackTime = datetime.datetime.now()
 	strTime = hackTime.strftime("%y_%m_%d_%H")
@@ -214,18 +221,19 @@ def checkWeather():
 		gridY = item[2]
 		dataDir = "data/"
 		dirPath = office+"/"+str(gridX)+"_"+str(gridY)
-		# if not(os.path.isdir(dataDir)):
-			# try:
-				# os.makedirs(dataDir)
-			# except Exception as e:
-				# print("Error: could not create required directory.")
-				# print(e)
-				# sys.exit(1)
+		if not(os.path.isdir(dataDir)):
+			try:
+				os.makedirs(dataDir)
+			except Exception as e:
+				print("Error: could not create required directory.")
+				print(e)
+				sys.exit(1)
 			"""
 			       "forecast": "https://api.weather.gov/gridpoints/IND/27,26/forecast",
         "forecastHourly": "https://api.weather.gov/gridpoints/IND/27,26/forecast/hourly",
         "forecastGridData": "https://api.weather.gov/gridpoints/IND/27,26",
         "observationStations": "https://api.weather.gov/gridpoints/IND/27,26/stations",
+		"stationOfInterest": "https://api.weather.gov/stations/%%%%/observations/current"
 			"""
 		writeBlob = {}
 		#forecastGridData
@@ -264,12 +272,12 @@ def checkWeather():
 			#time.sleep(5)
 			#continue
 		
-		# writingMode = 'w'
-		# if(os.path.exists(dataDir) and os.path.isfile(dataDir+'runningArchive.zip')):
-			# writingMode = 'a'
+		writingMode = 'w'
+		if(os.path.exists(dataDir) and os.path.isfile(dataDir+'runningArchive.zip')):
+			writingMode = 'a'
 		
 		#write the data (later to be replaced with db access)
-		# try:
+		try:
 			# zf = zipfile.ZipFile(dataDir+'runningArchive.zip', 
 								 # mode='a',
 								 # compression=zipfile.ZIP_DEFLATED, 
@@ -280,12 +288,15 @@ def checkWeather():
 				# print("error zipping data file "+ str(item)+"")
 			# finally:
 				# zf.close()
-			# #with open(os.path.join(dirPath,strTime+'.json'), 'w') as curFileOut:
-			# #	json.dump(writeBlob, curFileOut)
-		# except:
-			# print("error writing data file "+ str(item)+", moving to next item")
-			# continue
+			with open(os.path.join(dirPath,strTime+'.json'), 'w') as curFileOut:
+				json.dump(writeBlob, curFileOut)
+				
+		except:
+			print("error writing data file "+ str(item)+", moving to next item")
+			continue
+#end background code
 
 if __name__ == "__main__":
+	#sys.exit(0)
 	init()
 
