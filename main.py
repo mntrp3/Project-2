@@ -7,17 +7,27 @@ import json
 import numpy
 import datetime
 import zipfile
+import sys
+import logging
+import socket
+import sqlalchemy
 
-from flask import Flask
+from flask import Flask, request
+from flask_sqlalchemy import SQLAlchemy
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 
 
 
+
+
 app = Flask(__name__)
+#variable to prevent a LOT of processing that google'd do.
+debug_deployment = True
 listOfPrimeGeoLocs = []
 allGeoLocsWeatherLocs = {}
 allWeatherLocs = []
+allStationSets = {}
 weatherEndpoint = "https://api.weather.gov/"
 
 
@@ -62,13 +72,13 @@ def getLocs():
 			counter+=1
 		
 		outputDict = {"primaryGeoLocations":listOfPrimeGeoLocs}
-		try:
-			with open('config.json', 'w') as configFileOut:
-				json.dump(outputDict, configFileOut)
+		# try:
+			# with open('config.json', 'w') as configFileOut:
+				# json.dump(outputDict, configFileOut)
 		
-		except:
-			print("error writing config file, now exiting")
-			sys.exit(1)
+		# except:
+			# print("error writing config file, now exiting")
+			# sys.exit(1)
 	#load config file
 	configData = {}	
 	configChanged = True
@@ -98,12 +108,12 @@ def getLocs():
 	#else:
 		#allWeatherLocs = configData["weatherLocs"]
 	#write to config file if any data changed
-	if(configChanged):
-		try:
-			with open('config.json', 'w') as configFileOut:
-				json.dump(configData, configFileOut)
-		except:
-			print("error modifying config file, now continuing")
+	# if(configChanged):
+		# try:
+			# with open('config.json', 'w') as configFileOut:
+				# json.dump(configData, configFileOut)
+		# except:
+			# print("error modifying config file, now continuing")
 			
 	print("location initialization and update complete.")
 	
@@ -120,10 +130,14 @@ def getAllGeoWeatherLocMappings():
 	locSet = []
 	retDict = {}
 	
+	# highOffset = 0.1
+	# lowOffset = 0.5
+	# stepLow = 0.1
+	# stepHigh = 0.01
 	highOffset = 0.1
-	lowOffset = 0.5
+	lowOffset = 0.2
 	stepLow = 0.1
-	stepHigh = 0.01
+	stepHigh = 0.05
 	for loc in fullSet:
 		curLon = loc[0]
 		curLat = loc[1]
@@ -152,9 +166,15 @@ def getAllGeoWeatherLocMappings():
 	print("locset before apiCalls")
 	#print(locSet)
 	
+	visitedUniqueLocs = {}
 	#the part where we call the weather api for its locations
 	#'https://api.weather.gov/points/lat,lon
 	for uniqueLocation in locSet:
+		if(str(uniqueLocation) in visitedUniqueLocs):
+			continue
+		#print(str(uniqueLocation))
+		visitedUniqueLocs[str(uniqueLocation)]=1
+		
 		try:
 			response = requests.get(weatherEndpoint+"points/"+str(uniqueLocation[1])+","+str(uniqueLocation[0]))
 			properties = response.json()["properties"]
@@ -194,13 +214,13 @@ def checkWeather():
 		gridY = item[2]
 		dataDir = "data/"
 		dirPath = office+"/"+str(gridX)+"_"+str(gridY)
-		if not(os.path.isdir(dataDir)):
-			try:
-				os.makedirs(dataDir)
-			except Exception as e:
-				print("Error: could not create required directory.")
-				print(e)
-				sys.exit(1)
+		# if not(os.path.isdir(dataDir)):
+			# try:
+				# os.makedirs(dataDir)
+			# except Exception as e:
+				# print("Error: could not create required directory.")
+				# print(e)
+				# sys.exit(1)
 			"""
 			       "forecast": "https://api.weather.gov/gridpoints/IND/27,26/forecast",
         "forecastHourly": "https://api.weather.gov/gridpoints/IND/27,26/forecast/hourly",
@@ -244,27 +264,27 @@ def checkWeather():
 			#time.sleep(5)
 			#continue
 		
-		writingMode = 'w'
-		if(os.path.exists(dataDir) and os.path.isfile(dataDir+'runningArchive.zip')):
-			writingMode = 'a'
+		# writingMode = 'w'
+		# if(os.path.exists(dataDir) and os.path.isfile(dataDir+'runningArchive.zip')):
+			# writingMode = 'a'
 		
 		#write the data (later to be replaced with db access)
-		try:
-			zf = zipfile.ZipFile(dataDir+'runningArchive.zip', 
-								 mode='a',
-								 compression=zipfile.ZIP_DEFLATED, 
-								 )
-			try:
-				zf.writestr(os.path.join(dirPath,strTime+'.json'), json.dumps(writeBlob))
-			except:
-				print("error zipping data file "+ str(item)+"")
-			finally:
-				zf.close()
-			#with open(os.path.join(dirPath,strTime+'.json'), 'w') as curFileOut:
-			#	json.dump(writeBlob, curFileOut)
-		except:
-			print("error writing data file "+ str(item)+", moving to next item")
-			continue
+		# try:
+			# zf = zipfile.ZipFile(dataDir+'runningArchive.zip', 
+								 # mode='a',
+								 # compression=zipfile.ZIP_DEFLATED, 
+								 # )
+			# try:
+				# zf.writestr(os.path.join(dirPath,strTime+'.json'), json.dumps(writeBlob))
+			# except:
+				# print("error zipping data file "+ str(item)+"")
+			# finally:
+				# zf.close()
+			# #with open(os.path.join(dirPath,strTime+'.json'), 'w') as curFileOut:
+			# #	json.dump(writeBlob, curFileOut)
+		# except:
+			# print("error writing data file "+ str(item)+", moving to next item")
+			# continue
 
 if __name__ == "__main__":
 	init()
