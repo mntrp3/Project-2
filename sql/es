@@ -1,0 +1,21 @@
+-- Table: public."earthStations"
+
+-- DROP TABLE public."earthStations";
+
+CREATE TABLE public."earthStations"
+(
+    id integer NOT NULL DEFAULT nextval('"earthStations_id_seq"'::regclass),
+    "fullName" text COLLATE pg_catalog."default",
+    lat double precision,
+    "long" double precision,
+    "currentAccuracy" double precision,
+    gridpoint text COLLATE pg_catalog."default",
+    CONSTRAINT "earthStations_pkey" PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."earthStations"
+    OWNER to postgres;

@@ -1,0 +1,17 @@
+-- Table: public."gridStations"
+
+-- DROP TABLE public."gridStations";
+
+CREATE TABLE public."gridStations"
+(
+    id integer NOT NULL DEFAULT nextval('"gridStations_id_seq"'::regclass),
+    "gridPoint" text COLLATE pg_catalog."default",
+    CONSTRAINT "gridStations_pkey" PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."gridStations"
+    OWNER to postgres;
