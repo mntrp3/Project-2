@@ -1,0 +1,104 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+  "title": "DC Weather, March 2013- March 2018",
+"data": {
+    "url": "./data/vega/complex_cs.json"
+  },
+  "vconcat": [
+    {
+      "encoding": {
+        "color": {
+          "condition": {
+            "field": "weather",
+            "scale": {
+              "domain": ["Clouds", "Clear", "Rain", "Mist", "Drizzle", "Fog", "Thunderstorm", "Haze",	"Snow",	"Squall", "Smoke"],
+              "range": ["#bababa", "#f9dc57", "#1f77b4", "#aec7e8", "#73a3e2", "#404042", "#1f35b4", "#e79752", "#ff35d3", "#9467bd", "#f4424b"]
+            },
+            "selection": "brush",
+            "type": "nominal"
+          },
+          "value": "lightgray"
+        },
+        "size": {
+          "field": "precipitation",
+          "scale": {
+            "domain": [-1, 50]
+          },
+          "type": "quantitative"
+        },
+        "x": {
+          "axis": {
+            "title": "Date"
+          },
+          "field": "date",
+          "timeUnit": "monthdate",
+          "type": "temporal"
+        },
+        "y": {
+          "axis": {
+            "title": "Maximum Daily Temperature (C)"
+          },
+          "field": "temp_max",
+    "scale": {"domain": [-15, 40]},
+          "type": "quantitative"
+        }
+      },
+      "height": 300,
+      "mark": "point",
+      "selection": {
+        "brush": {
+          "encodings": ["x"],
+          "type": "interval"
+        }
+      },
+      "transform": [
+        {
+          "filter": {
+            "selection": "click"
+          }
+        }
+      ],
+      "width": 600
+    },
+    {
+      "encoding": {
+        "color": {
+          "condition": {
+            "field": "weather",
+            "scale": {
+              "domain": ["Clouds", "Clear", "Rain", "Mist", "Drizzle", "Fog", "Thunderstorm", "Haze",	"Snow",	"Squall", "Smoke"],
+              "range": ["#bababa", "#f9dc57", "#1f77b4", "#aec7e8", "#73a3e2", "#404042", "#1f35b4", "#e79752", "#ff35d3", "#9467bd", "#f4424b"]
+            },
+            "selection": "click",
+            "type": "nominal"
+          },
+          "value": "lightgray"
+        },
+        "x": {
+          "aggregate": "count",
+          "field": "*",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "weather",
+          "type": "nominal"
+        }
+      },
+      "mark": "bar",
+      "selection": {
+        "click": {
+          "encodings": ["color"],
+          "type": "multi"
+        }
+      },
+      "transform": [
+        {
+          "filter": {
+            "selection": "brush"
+          }
+        }
+      ],
+      "width": 600
+    }
+  ]
+}
