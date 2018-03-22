@@ -3,7 +3,7 @@
 
 <head>
     <title>DC Weather Collaborative</title>
-    <!--This page is for Chart #1
+    <!--This page is for the vega_scatter plot
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -15,11 +15,24 @@
     <link rel="icon" href="data:;base64,iVBORwOKGO=">
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+    <!-- uploads Vega to render graph -->
+    <script src="https://vega.github.io/vega/vega.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
     <!-- Custom styles for this template -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
     <link rel="stylesheet" href="css/custom.css">
-
+    <!-- Styling for vega -->
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+    
+     .vega-actions a {
+       padding: 0.2em;
+      }
+    </style>    
 
 </head>
 
@@ -55,9 +68,11 @@
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
-            <div class="container-fluid">
+            <div class="container-fluid , glass down" >
               <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
                 <h1>Weather Predictions</h1>
+                  
+
                 <p> <h3>Chart # 3</h3>
                 Using the Reagan National airport's weather station as a center, present a year's worth of daily data from weather.gov to create a graph using the vega weather bubble plot<br>
                 We will be plotting max daily temp F on (y), by day (x)  as the x-tick, with weather phenomena (sun, snow, rain, fog, drizzle) for color, and precipitation as the size of the circle. <br>
@@ -67,7 +82,10 @@
                 <p></p>
 
             </div>
+          <div class="glass down" >
+          <div id="vis"></div>
         </div>
+      </div>
         <!-- /#page-content-wrapper -->
 
     </div>
@@ -85,6 +103,10 @@
     });
     </script>
 
+    <script>
+    const vega_scatter = "vega_scatter.json";
+    vegaEmbed('#vis', vega_scatter).catch(console.warn);
+    </script>
 </body>
 
 </html>
