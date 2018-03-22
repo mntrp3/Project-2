@@ -10,7 +10,7 @@ env_variables:
     # Replace user, password, database, and instance connection name with the values obtained
     # when configuring your Cloud SQL instance.
     SQLALCHEMY_DATABASE_URI: >-
-      postgresql+psycopg2://proxy_test:ThisTookTooLong@/dcweather?host=/cloudsql/teamthundersnow-198022:us-central1:dcweather
+      postgresql+psycopg2://proxy_test:ThisTookTooLong@/WeatherTables?host=/cloudsql/teamthundersnow-198022:us-central1:dcweather
 #[END env]
 
 #[START cloudsql_settings]
