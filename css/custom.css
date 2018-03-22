@@ -1,3 +1,4 @@
+
 body {
  margin: 0;
  background-image: url("../img/DC-Snow.jpg");
@@ -10,13 +11,15 @@ body {
 
 .frosted-glass {
   background: inherit;
+  height: 100%;
+  width:100%;
   position: relative;
   z-index: 1;
   overflow: hidden;
   margin: 0 auto;
   padding: 2rem;
   box-sizing: border-box;
-  box-shadow: 0 .5em .1em, rgba(0,0,0,.3);
+  box-shadow: 0 .5px .1px, rgba(0,0,0,.3);
 
 }
 
@@ -26,8 +29,8 @@ body {
   z-index: -1;
   top:0; right:0; bottom:0; left:0;
   background: inherit;
-  box-shadow: inset 0 0 3000px rgba(255,255,255,.5);
-  filter: blur(200px);
+  box-shadow: inset  0 3000px rgba(255,255,255,1);
+  filter: blur(500px);
   margin: -20px;
 
 }
@@ -92,14 +95,14 @@ body {
 }
 
 .grid .tick {
-    stroke: lightgrey;
+    stroke: black;
     opacity: 1;
     font: 12;
 
 }
 .grid path {
 
-      stroke-width: 10px;
+      stroke-width: 5px;
 }
 
 .line {
