@@ -1,0 +1,56 @@
+[
+{
+"hour": "8:00 AM",
+"threeDayPredict": "65",
+"today": "60",
+"yesterdayPredict": "65"
+},
+{
+"hour": "9:00 AM",
+"threeDayPredict": "45",
+"today": "70",
+"yesterdayPredict": "40"
+},
+{
+"hour": "10:00 AM",
+"threeDayPredict": "82",
+"today": "40",
+"yesterdayPredict": "80"
+},
+{
+"hour": "11:00 AM",
+"threeDayPredict": "85",
+"today": "60",
+"yesterdayPredict": "85"
+},
+{
+"hour": "12:00 PM",
+"threeDayPredict": "80",
+"today": "80",
+"yesterdayPredict": "80"
+},
+{
+"hour": "1:00 PM",
+"threeDayPredict": "75",
+"today": "45",
+"yesterdayPredict": "75"
+},
+{
+"hour": "2:00 PM",
+"threeDayPredict": "72",
+"today": "50",
+"yesterdayPredict": "73"
+},
+{
+"hour": "3:00 PM",
+"threeDayPredict": "70",
+"today": "40",
+"yesterdayPredict": "70"
+},
+{
+"hour": "4:00 PM",
+"threeDayPredict": "75",
+"today": "null",
+"yesterdayPredict": "75"
+}
+]
