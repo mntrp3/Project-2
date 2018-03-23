@@ -20,15 +20,19 @@ var height = svgHeight - margin.top - margin.bottom;
 
 // Create an SVG wrapper, append an SVG group that will hold our chart, and shift the latter by left and top margins.
 var svg = d3
-  .select("body")
+  .select("#svg-here")
   .append("svg")
   .attr("width", svgWidth)
   .attr("height", svgHeight)
   .append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-// Import data from the mojoData.csv file
-d3.csv("mojoData.csv", function(error, mojoData) {
+// set a variable for the URL
+//var url = 'https://teamthundersnow-198022.appspot.com/recentTempTrend'
+
+var url = 'daily_predicted_weather.json'
+// Import data from the url
+d3.json(url, function(error, mojoData) {
   if (error) throw error;
 
   // console.log(mojoData)
@@ -78,6 +82,19 @@ d3.csv("mojoData.csv", function(error, mojoData) {
   // Use the yMax value to set the yLinearScale domain
   yLinearScale.domain([0, yMax]);
 
+//Create a function that makes grid lines for the graph
+
+// gridlines in x axis function
+//function make_x_gridlines() {   
+//    return bottomAxis
+//        .ticks(6)
+//}
+
+// gridlines in y axis function
+//function make_y_gridlines() {   
+//    return leftAxis
+ //       .ticks(11)
+//}
   /* Comments:
 1. var todayMax = d3.max(mojoData, function(data){return data.today});
     var yesterdayPredictMax = d3.max(mojoData, function(data){return data.today});
@@ -128,6 +145,22 @@ We set the y-axis domain to [0, yMax].
       return yLinearScale(data.today);
     });
 
+  // add the X gridlines
+//  svg.append("g")     
+ //     .attr("class", "grid")
+  //    .attr("transform", "translate(0," + height + ")")
+  //    .call(make_x_gridlines()
+   //       .tickSize(-height)
+     //     .tickFormat("")
+    //  )
+
+  // add the Y gridlines
+//  svg.append("g")     
+//      .attr("class", "grid")
+//      .call(make_y_gridlines()
+//          .tickSize(-width)
+//          .tickFormat("")
+//      )
   // Append a path for line1
   svg
     .append("path")
@@ -152,7 +185,6 @@ We set the y-axis domain to [0, yMax].
   // Add x-axis
   svg
     .append("g")
-    .attr("class", "grid")
     .attr("transform", "translate(0, " + height + ")")
     .call(bottomAxis);
 
@@ -160,8 +192,8 @@ We set the y-axis domain to [0, yMax].
   // Add y-axis
   svg
     .append("g")
-    .attr("class", "grid")
     .call(leftAxis);
+
 
   /* Comments:
 1. svg.append('path')
