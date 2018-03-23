@@ -291,7 +291,7 @@ def checkWeather():
 		killTime1 = (hackTime-timedelta(days=4)).strftime("%Y%m%d%H")
 		killTime2 = (hackTime-timedelta(days=1)).strftime("%Y%m%d%H")
 		
-		Forecast.query.filter(and_(hoursForward!=24,hoursForward!=72).delete()
+		Forecast.query.filter(and_(hoursForward!=24,hoursForward!=72)).delete()
 		Forecast.query.filter(dayAndHour<killTime1).delete()
 		EarthStationObservations.query.filter(dayAndHour<killTime2).delete()
 		
@@ -419,7 +419,7 @@ def checkWeather():
 			
 			try:
 				timeString = datetime.strptime(writeBlob["properties"]['timestamp'][:13], '%Y-%m-%dT%H').strftime("%Y%m%d%H")
-				if item.currentAccuracy == Null or item.currentAccuracy = <1.0:
+				if item.currentAccuracy == Null or item.currentAccuracy <1.0:
 					item.currentAccuracy = 90.0
 				
 				curTemp =float(writeBlob['properties']['temperature']['value'])*1.8+32.0
@@ -496,7 +496,7 @@ def GetRecentTempHistory():
 # }
 @app.route('/curForecastInfo')
 def GetRecentForecast():
-	
+	return "not yet implemented"
 
 #configuration, setup, and maintenance code: do not call except when needed.
 @app.route('/initDatabase')
@@ -505,9 +505,14 @@ def InsertTables():
 	return "tables created!", 200, {'Content-Type': 'text/plain; charset=utf-8'}
 
 @app.route('/buildLocSet')
-def GenerateLocAndES():
+def GenerateLoc():
 	global weatherEndpoint
-	startingLocSet = getAllGeoWeatherLocMappings()
+	print ("writing locs to db")
+	try:
+		startingLocSet = getAllGeoWeatherLocMappings()
+	except:
+		return "failed to generate all points", 500, {'Content-Type': 'text/plain; charset=utf-8'}
+	print("locs generated")
 	visitedUniqueLocs = {}
 	visitedGridPoints={}
 	visitedES = {}
@@ -518,40 +523,43 @@ def GenerateLocAndES():
 			continue
 		#print(str(uniqueLocation))
 		visitedUniqueLocs[str(uniqueLocation)]=1
-		
 		try:
 			response = requests.get(weatherEndpoint+"points/"+str(uniqueLocation[1])+","+str(uniqueLocation[0]))
 			properties = response.json()["properties"]
-			gridPointString =	properties["cwa"]+"_"+properties["gridX"]+"_"+properties["gridY"]
+			gridPointString = str(properties["cwa"])+"_"+str(properties["gridX"])+"_"+str(properties["gridY"])
 			
 			secondResponse = requests.get(weatherEndpoint+"points/"+str(uniqueLocation[1])+","+str(uniqueLocation[0])+"/stations")
-			curPointStationSet = response.json()["features"]
+			curPointStationSet = secondResponse.json()["features"]
 			#later: get closest ES to point of investigation
 			#HACK: should return/compute this bit separately.
 			firstStation = curPointStationSet[0]
 			stationName = firstStation['properties']['stationIdentifier']
 		except Exception as e:
 			#sys.exit(0)
-			print("Error has occurred:")
+			print("Error has occurred:" +str(sys.exc_info()[-1].tb_lineno))
 			print(str(e))
 			continue
-		
-		newLoc = Locations(uniqueLocation[1],uniqueLocation[0],stationName)
-		db.session.add(newLoc)
-		
-		if(stationName in visitedES):
-			continue
-		
-		newES = EarthStations(stationName, firstStation['geometry']['coordinates'][1], firstStation['geometry']['coordinates'][0],90.0, gridPointString)
-		db.session.add(newES)
-		visitedES[stationName]=1
-		
-		if( gridPointString in visitedGridPoints):
-			continue
-		
-		newGridPoint = GridStations(gridPointString)
-		db.session.add(newGridPoint)
-		visitedGridPoints[gridPointString]=1
+		try:
+			newLoc = Locations(uniqueLocation[1],uniqueLocation[0],stationName)
+			db.session.add(newLoc)
+			
+			if(stationName in visitedES):
+				continue
+			
+			newES = EarthStations(stationName, firstStation['geometry']['coordinates'][1], firstStation['geometry']['coordinates'][0],90.0, gridPointString)
+			db.session.add(newES)
+			visitedES[stationName]=1
+			
+			if( gridPointString in visitedGridPoints):
+				continue
+			
+			newGridPoint = GridStations(gridPointString)
+			db.session.add(newGridPoint)
+			visitedGridPoints[gridPointString]=1
+		except Exception as e:
+			print ("failed db adds")
+			print(str(e))
+			return "failed to add to db", 500, {'Content-Type': 'text/plain; charset=utf-8'}
 	db.session.commit()
 	# try:
 		# with open('allStations.json', 'w') as stationDataOut:
