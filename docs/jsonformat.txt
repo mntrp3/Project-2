@@ -1,0 +1,6 @@
+{
+"collectionTime":{"day":1,"hour":25},
+"locations":[{lat,lon,"statID"},...],
+"stations": {"statID":{"gridID",accuracy},...},
+"forecastGrid":{"1":{"gridID":{forecastTemp,icon,shortCast,windSpeed,windDirection}...},"2":...}
+}
