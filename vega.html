@@ -12,18 +12,18 @@
     body {
       font-family: sans-serif;
     }
-    
+
     .vega-actions a {
       padding: 0.2em;
     }
   </style>
 </head>
 
-<body>  
+<body>
   <div id="vis"></div>
-  
+
   <script>
-    const vega_scatter = "vega_scatter.json";
+    var vega_scatter = "./data/vega/vega_scatter_simple_cs.json";
   	vegaEmbed('#vis', vega_scatter).catch(console.warn);
   </script>
 </body>
