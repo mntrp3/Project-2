@@ -1,12 +1,22 @@
-
+/* remove default margin and padding from body */
 body {
  margin: 0;
- background-image: url("../img/DC-Snow.jpg");
+ padding: 0;
+ background-image: url("../img/DC_sunny_spring.jpg");
  background-size: cover;
  background-repeat:no-repeat;
  display: compact;
  font: 13px/18px "Helvetica Neue", Helvetica, Arial, sans-serif;
  color:white;
+}
+
+
+
+/* set map, body, and html to 100% of the screen size */
+#map,
+body,
+html {
+  height: 100%;
 }
 
 .frosted-glass {
