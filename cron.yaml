@@ -1,4 +1,1 @@
 cron:
-- description: "weatherUpdate"
-  url: /update
-  schedule: every 1 hours
