@@ -28,11 +28,11 @@
       body {
         font-family: sans-serif;
       }
-    
+
      .vega-actions a {
        padding: 0.2em;
       }
-    </style>    
+    </style>
 
 </head>
 
@@ -72,7 +72,7 @@
             <div class="container-fluid" >
               <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
                 <h1>Weather Predictions</h1>
-                  
+
 
                 <p> <h3>Chart # 3</h3>
                 Using the Reagan National airport's weather station as a center, present a year's worth of daily data from weather.gov to create a graph using the vega weather bubble plot<br>
@@ -91,7 +91,7 @@
 
     </div>
   </div>
-  
+
     <!-- /#wrapper -->
 
     <!-- Bootstrap core JavaScript -->
@@ -107,8 +107,8 @@
     </script>
 
     <script>
-    const vega_scatter = "vega_scatter.json";
-    vegaEmbed('#vis', vega_scatter).catch(console.warn);
+      var vega_scatter = "./data/vega/vega_scatter_simple_fh.json";
+      vegaEmbed('#vis', vega_scatter).catch(console.warn);
     </script>
 </body>
 
