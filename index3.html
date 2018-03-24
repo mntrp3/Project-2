@@ -81,6 +81,12 @@
                 <p></p>
 
             </div>
+            <div class="btn-group btn-group-xs" role="group">
+              <button type="button" class="btn btn-xs" value="./data/vega/vega_scatter_simple_fh.json">Daily &degF</button>
+              <button type="button" class="btn btn-xs" value="./data/vega/vega_scatter_simple_cs.json">Daily &degC</button>
+              <button type="button" class="btn btn-xs" value="./data/vega/vega_scatter_complex_fh.json">Hourly &degF</button>
+              <button type="button" class="btn btn-xs" value="./data/vega/vega_scatter_complex_fh.json">Hourly &degC</button>
+            </div>
           <div class="frosted-glass" >
           <div id="vis"></div>
         </div>
@@ -107,6 +113,12 @@
     <script>
       var vega_scatter = "./data/vega/vega_scatter_simple_fh.json";
       vegaEmbed('#vis', vega_scatter).catch(console.warn);
+    </script>
+    <script type="text/javascript">
+      $('.btn').on('click', function (e) {
+        vega_scatter = this.value;
+        vegaEmbed('#vis', vega_scatter).catch(console.warn);
+      })
     </script>
 </body>
 
