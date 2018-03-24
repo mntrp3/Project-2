@@ -12,15 +12,16 @@
     <!-- kills favicon.ico 404 error -->
     <link rel="icon" href="data:;base64,iVBORwOKGO=">
     <!-- Bootstrap core CSS -->
-    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  
     <!-- uploads Vega to render graph -->
     <script src="https://vega.github.io/vega/vega.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega@3"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
     <!-- Custom styles for this template -->
-    <link href="static/css/simple-sidebar.css" rel="stylesheet">
-    <link rel="stylesheet" href="static/css/custom.css">
+    <link href="/static/css/simple-sidebar.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/custom.css">
     <!-- Styling for vega -->
     <style>
       body {
@@ -81,6 +82,12 @@
                 <p></p>
 
             </div>
+            <div class="btn-group btn-group-xs" role="group">
+              <button type="button" class="btn btn-xs" value="/static/data/vega_scatter_simple_fh.json">Daily &degF</button>
+              <button type="button" class="btn btn-xs" value="/static/data/vega_scatter_simple_cs.json">Daily &degC</button>
+              <button type="button" class="btn btn-xs" value="/static/data/vega_scatter_complex_fh.json">Hourly &degF</button>
+              <button type="button" class="btn btn-xs" value="/static/data/vega_scatter_complex_fh.json">Hourly &degC</button>
+            </div>
           <div class="frosted-glass" >
           <div id="vis"></div>
         </div>
@@ -93,8 +100,9 @@
     <!-- /#wrapper -->
 
     <!-- Bootstrap core JavaScript -->
-    <script src="static/vendor/jquery/jquery.min.js"></script>
-    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Menu Toggle Script -->
     <script>
@@ -107,6 +115,12 @@
     <script>
       var vega_scatter = "./data/vega/vega_scatter_simple_fh.json";
       vegaEmbed('#vis', vega_scatter).catch(console.warn);
+    </script>
+    <script type="text/javascript">
+      $('.btn').on('click', function (e) {
+        vega_scatter = this.value;
+        vegaEmbed('#vis', vega_scatter).catch(console.warn);
+      })
     </script>
 </body>
 

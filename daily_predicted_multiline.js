@@ -28,7 +28,7 @@ var svg = d3
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // set a variable for the URL
-var url = 'http://127.0.0.1:5000/recentTempTrend'
+var url = '/recentTempTrend'
 
 //var url = 'daily_predicted_weather.json'
 // Import data from the url
