@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>DC Weather Collaborative Chart #2</title>
+    <!--This page is for Chart #1 -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- kills favicon.ico 404 error -->
+    <link rel="icon" href="data:;base64,iVBORwOKGO=">
+    <!-- Leaflet JS & CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+    <script src="static/vendor/leaflet.ajax.min.js"></script>
+    <!-- Leaflet Timeline CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.timeline@1.2.0/dist/leaflet.timeline.min.js"></script>
+    <!-- d3 JS -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="static/css/simple-sidebar.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="static/css/custom.css">
+
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+          <ul class="sidebar-nav">
+              <li class="sidebar-brand">
+                  <a href="index.html">Multi-Line Graph</a>
+              </li>
+              <li>
+                  <a href="index2.html">Weather Map</a>
+              </li>
+              <li>
+                  <a href="index3.html">Yearly Weather Chart</a>
+              </li>
+              <li>
+                <!-- This will link to our data stored on Google -->
+                  <a href="#">Raw Data</a>
+              </li>
+              <li>
+                <!-- Do we want this to be where we put our write-up of how we made this> -->
+                  <a href="https://github.com/DavisCardwell/Project-2">About</a>
+              </li>
+
+          </ul>
+      </div>
+      <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+              <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
+                <h1>Weather Predictions</h1>
+              <!--  <p><h3>Chart # 2</h3> -->
+                          <!--  //Using Leaflet & the timeline plugin show weather for 3 days or 7 days forecasted with a drop down including icons of rain, snow, hail etc...<br>
+                Timeline will be daily (morning and evening) based and move icons around the map based on the time of day and location of issues<br>
+                Bind click event will tell you the temperature, wind speed, chance of precipitation, potentially show percent accuracy, icons will be presented on map<br> -->
+                </p>
+
+            </div>
+        </div>
+        <div id="map"></div>
+
+
+
+
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+  <script type="text/javascript" src="static/logic.js"></script>
+</body>
+
+</html>
