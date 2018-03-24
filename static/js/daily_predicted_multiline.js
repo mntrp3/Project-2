@@ -1,3 +1,22 @@
+
+
+d3.json("/static/js/AllStationsWithLocTag.json", function(error, response) {
+    // error trapping for failed call from Flask
+    if (error) return console.warn(error);
+
+    var $dropDown = document.getElementById("selEarthStation");
+
+    for (var i = 0; i < response.length; i++) {
+        var $optionChoice = document.createElement("option");
+        $optionChoice.innerHTML = response[i].name;
+        $optionChoice.setAttribute("abbreviation",response[i].abbrev)
+        //$optionChoice.setAttribute("value", response[i].tag);
+        $dropDown.appendChild($selEarthStation);
+    };
+});
+
+optionChanged("KDCA")
+function optionChanged(chosenSample) {
 //multiline graph
 
 //actual hourly tempurature in Fahrenheit for the day
@@ -28,9 +47,9 @@ var svg = d3
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // set a variable for the URL
-var url = 'http://127.0.0.1:5000/recentTempTrend'
+//var url = '/recentTempTrend'
 
-//var url = 'daily_predicted_weather.json'
+var url = '/static/js/daily_predicted_weather.json'
 // Import data from the url
 d3.json(url, function(error, mojoData) {
   if (error) throw error;
@@ -209,3 +228,5 @@ http://stackoverflow.com/questions/41310542/d3-data-binding-when-to-put-brackets
 2. The only other notable difference here from the previous examples is that we now have two line generator functions, one for each line. We, of course, also append an SVG path for each line, where the line function is called.
 */
 });
+}
+
