@@ -134,6 +134,14 @@ class GridPointESMapping(db.Model):
 def weather():
 	return render_template('index.html')
 
+@app.route('/index2.html')
+def weathermap():
+	return render_template('index2.html')
+
+@app.route('/index3.html')
+def yearweather():
+	return render_template('index3.html')
+
 @app.route('/status')
 def checkLive():
 	print("status checked")
