@@ -4,7 +4,7 @@
 //renderMap(WeatherURL);
 
 //function renderMap(weatherURL) {}
-  d3.json("SevendayGeo.json", function(response) {
+  d3.json("static/test_data.json", function(response) {
     console.log(response);
 
   // Loop through our data...
@@ -27,7 +27,7 @@
       var marker = L.marker([lat, lon], {icon: weatherIcon})
     };
     function forEachForecast(data, layer) {
-      layer.bindPopup("<h3>Temperature  " + temp + "<h3>Date:  " + day +","+ date + "<h3>Forecast:  " + longfore + "</h3>");
+      layer.bindPopup("<h3>Temperature:  " + temp + "<h3>Date:  " + day +","+ date + "<h3>Forecast:  " + longfore + "</h3>");
     };
 
     var weather = L.geoJSON(data, {
