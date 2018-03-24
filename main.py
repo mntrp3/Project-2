@@ -12,7 +12,7 @@ import logging
 import socket
 import sqlalchemy
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -129,6 +129,10 @@ class GridPointESMapping(db.Model):
 ######END DATABASE DECLARATION AND VAR INITIALIZATION
 
 #####CLIENT SERVING FUNCTIONS
+
+@app.route('/')
+def weather():
+	return render_template('index.html')
 
 @app.route('/status')
 def checkLive():

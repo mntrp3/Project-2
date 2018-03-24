@@ -7,10 +7,10 @@
 	<!-- kills favicon.ico 404 error -->
     <link rel="icon" href="data:;base64,iVBORwOKGO=">
        <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
      <!-- Custom styles for this template -->
-    <link href="css/simple-sidebar.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/custom.css">
+    <link href="static/css/simple-sidebar.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/custom.css">
 	<script src="https://d3js.org/d3-time-format.v2.min.js"></script>
 	<script src="https://d3js.org/d3.v4.min.js"></script>
 
@@ -43,7 +43,6 @@
         </div>
          <!-- Page Content -->
         <div id="page-content-wrapper">
-            <div class="frosted-glass">
             <div class="container-fluid">
               <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
                 <h1>Weather Predictions</h1>
@@ -59,14 +58,13 @@
 
     <div id="svg-here" class="frosted-glass"> </div>
     </div>
-    </div>
 	</div>
 </div>
 </body>
-	<script src="daily_predicted_multiline.js">
+	<script src="static/js/daily_predicted_multiline.js">
     </script>
-	 <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	 <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- Menu Toggle Script -->
     <script>
     $("#menu-toggle").click(function(e) {
