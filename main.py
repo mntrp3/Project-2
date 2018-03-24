@@ -76,6 +76,10 @@ class EarthStationObservation(db.Model):
 @app.route('/')
 def weather():
 	return render_template('index.html')
+	
+@app.route('/index.html')
+def weatherReroute():
+	return weather()
 
 @app.route('/index2.html')
 def weathermap():
@@ -89,8 +93,17 @@ def yearweather():
 def checkLive():
 	print("status checked")
 	return "Status: OK", 200, {'Content-Type': 'text/plain; charset=utf-8'}
+@app.route('/ESSet')
+def getEarthStationNames():
+	retArr = []
+	for ES in EarthStation.query.all():
+		retArr.append({'name':ES.esName,'tag':ES.esTag})
+	return jsonify(retArr)
 
 
+@app.route('/recentTempTrend/')
+def GetRecentTempHistoryBase():
+	return GetRecentTempHistory("")
 	
 @app.route('/recentTempTrend/<Station>')
 def GetRecentTempHistory(Station):
@@ -115,8 +128,8 @@ def GetRecentTempHistory(Station):
 	accVal = curES.accuracy
 	
 	
-	if(curES is not None):
-		retDict['data']= {"name":str(curES.esName),"lat":latVal,"lon":lonVal, "acc":accVal}
+	# if(curES is not None):
+		# retDict['data']= {"name":str(curES.esName),"lat":latVal,"lon":lonVal, "acc":accVal}
 	
 	startingHour = int(accessTime[8:])
 	retArr = []

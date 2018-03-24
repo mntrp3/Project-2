@@ -1,3 +1,18 @@
+d3.json("/ESSet", function(error, response) {
+    // error trapping for failed call from Flask
+    if (error) return console.warn(error);
+
+    var $dropDown = document.getElementById("selEarthStation");
+
+    for (var i = 0; i < response.length; i++) {
+        var $optionChoice = document.createElement("option");
+        $optionChoice.innerHTML = response[i].name;
+        $optionChoice.setAttribute("value", response[i].tag);
+        $dropDown.appendChild($optionChoice);
+    };
+});
+
+optionChanged("")
 //multiline graph
 
 //actual hourly tempurature in Fahrenheit for the day
@@ -7,6 +22,8 @@
 //columns : 
 
 //actual TempF, Hour, 1 day forecasted tempF by hour, 3 day forecasted tempF by hour
+
+function optionChanged(chosenSample) {
 
 // Step 0: Set up our chart
 //= ================================
@@ -28,13 +45,13 @@ var svg = d3
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // set a variable for the URL
-var url = 'http://127.0.0.1:5000/recentTempTrend'
+var url = '/recentTempTrend/'+chosenSample
 
 //var url = 'daily_predicted_weather.json'
 // Import data from the url
-d3.json(url, function(error, mojoData) {
+d3.json(url, function(error, jojoData) {
   if (error) throw error;
-
+mojoData = jojoData['chartData']
   // console.log(mojoData)
   // console.log([mojoData])
   // Create a function to parse hour 
@@ -209,3 +226,4 @@ http://stackoverflow.com/questions/41310542/d3-data-binding-when-to-put-brackets
 2. The only other notable difference here from the previous examples is that we now have two line generator functions, one for each line. We, of course, also append an SVG path for each line, where the line function is called.
 */
 });
+}
