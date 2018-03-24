@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>DC Weather Collaborative</title>
+
+	<!-- kills favicon.ico 404 error -->
+    <link rel="icon" href="data:;base64,iVBORwOKGO=">
+       <!-- Bootstrap core CSS -->
+    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+     <!-- Custom styles for this template -->
+    <link href="static/css/simple-sidebar.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/custom.css">
+	<script src="https://d3js.org/d3-time-format.v2.min.js"></script>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+
+
+</head>
+
+<body>
+	<div id="wrapper">
+ <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="index.html">Multi-Line Graph</a>
+                </li>
+                <li>
+                    <a href="index2.html">Weather Map</a>
+                </li>
+                <li>
+                    <a href="index3.html">Yearly Weather Chart</a>
+                </li>
+                <li>
+                  <!-- This will link to our data stored on Google -->
+                  <a href="#">Raw Data</a>
+                </li>
+                <li>
+                    <a href="https://github.com/DavisCardwell/Project-2">About</a>
+                </li>
+
+            </ul>
+        </div>
+         <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+              <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
+                <h1>Weather Predictions</h1>
+                <p>We are creating a Multi- Line Graph with temperature information, d3/plotly will likely be the tool to use. <br>
+                Line graph will have this data: y will = temperature & x will = hours of that specific day <br>
+                Lines will be actual temperature, temperature that was predicted for that time the day before, temperature predicted the week before, and bonus: last year's hourly temperature.
+                <br>tool tip will calculate the accuracy percentage by the actual temperature of the hour.
+                <br>actual temperature will be a line that does not end until the end of the day.
+                <br>
+                guests can select a box and whiskers plot using the same data</p>
+                <p></p>
+
+
+    <div id="svg-here" class="frosted-glass"> </div>
+    </div>
+	</div>
+</div>
+</body>
+	<script src="static/js/daily_predicted_multiline.js">
+    </script>
+	 <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+</body>
+</html>
