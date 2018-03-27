@@ -1,60 +1,16 @@
-# Project-2
+# Project-2: Team ThunderSnow
 
-Our task: Tell a story with data.
+<p>    Our task in this project was to tell a story through data visualizations that would provide users with an interactive means to explore the data themselves.  In order to accomplish an interactive story, we chose to create a weather dashboard that would analyze and predict the accuracy of the National Weather Service's API for the D.C. area.  We also wanted to challenge ourselves with the task of making this run via a liver server that would take current weather forecast data, compare and analyze it contra past observed weather data, then visualize the findings on a web page which would provide interaction for the users who visit it.  We wanted to do something that would be useful for the area as well as fun and challenging to do. </p><br>
+   <p> Here are just some of the tools that we used to accomplish this project:  Google SDK for our server, Python & Flask, Postgres SQL, HTML with Bootstrap, CSS & Javascript, and Leaflet.js, Vega, and D3 for our visualizations. Below are the primary datasets that we worked with: <br>
+National Weather Service API - https://forecast-v3.weather.gov/documentation?redirect=legacy <br>
+Weather for the DMV area - https://www.weather.gov/lwx/ <br>
+Copy of the Metadata - https://api.weather.gov/gridpoints/LWX/94,69/forecast/hourly <br>
+Historical Test Weather Data - https://openweathermap.org/api </p> <br>
 
-Project Description:
+<p> Here is a chart laying out how we structured our server for use with Google SDK and Postgres SQL: </p>
+<img src='docs/SystemDiagramImage.PNG'/>
 
-For this second project, your task will be to "tell a story" through data visualizations.
-
-Unlike the first project, where you focused on using the "Analytics Paradigm" to explore relationships in "report form", this project should be more focused on providing users an interactive means to explore data themselves.
-
-Just as with the first project, you will be asked to conduct a 10 minute presentation that lays out your theme, coding approach, data munging techniques, and final visualization.
-
-You may choose a project of any theme, but we encourage you to think broadly. The universe is wide and expansive. Don't limit yourself to what you know.
-
-You will have roughly two weeks to complete this project. You will present your final work on Wednesday (March 21, 2018). You will have ample time in class to work with your group (but expect to put in some long nights in the days ahead).
-
-Specific Requirements:
-
-Your visualization must include a Python Flask powered RESTful API, HTML/CSS, JavaScript, and at least one database (MySQL, MongoDB, SQLite, etc.)
-
-Your project should fall into one of the below four tracks:
-A custom "creative" D3.js project (i.e. non-standard graph or chart)
-
-A combination of Web Scraping and Leaflet or Plotly
-
-A dashboard page with multiple charts all updating from the same data
-
-A "thick" server that performs multiple manipulations on data in a database prior to visualization (must be approved)
-
-Your project should include at least one JS library that we did not cover.
-
-Your project must be powered by a dataset with at least 100 records.
-
-Your project must include some level of user-driven interaction (e.g. menus, dropdowns, textboxes, etc.)
-
-Your final visualization should ideally include at least three views
-
-Weekly Schedule:
-Today: Between now and Saturday, you will need to start brainstorming topics with your group and researching potential datasets. Your focus should specifically center around:
-Selecting a Topic 	
-Finding a Dataset
-Finding Inspiration
-"Sketching" your ideal visuals
-Creating a 1-Page Proposal
-
-End-of-Class Saturday: You will need to create a 1 page proposal. The proposal should include:
-
-A brief articulation of your chosen topic and rationale
-
-A link to your dataset(s) and a screenshot of the metadata if it exists.
-
-3-4 screenshots of relevant "inspiring" visualizations that frame your creative fodder
-
-A sketch of the final design
-
-A link to the primary GitHub repository you'll be housing your work in
+<p> Below are images of what our website looked like in its final design stages: </p> <br>
 
 
-March 12, 14, 17, 19; Project Work
-March 21: Presentations!
+   
