@@ -12,5 +12,12 @@ Historical Test Weather Data - https://openweathermap.org/api </p> <br>
 
 <p> Below are images of what our website looked like in its final design stages: </p> <br>
 
+<p> Our mutli-line chart: </p> <br>
+<img src='img/Multiline-Example.png'/>
 
-   
+<p> Our Vega Plot with Daily Temperature Data (F): </p> <br>
+<img src='img/Vega-Daily.png' />
+
+<p> Our Vega Plot with Hourly Temperature Data (F): </p> <br>
+<img src='img/Vega-Hourly.png' ?>
+
